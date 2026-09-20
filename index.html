@@ -2,36 +2,33 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>⚔️ تحدي البوس - Crunch Challenge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚔️ تحدي البوس</title>
 
 <style>
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
     margin:0;
     min-height:100vh;
     font-family:Arial,Tahoma,sans-serif;
-    color:white;
+    color:#fff;
     background:
-        radial-gradient(circle at top,#252d52 0%,#0d1020 45%,#05060c 100%);
+    radial-gradient(circle at top,#252d55,#0b0e1a 55%,#03040a);
 }
 
 button{
-    font-family:inherit;
-    cursor:pointer;
     border:0;
+    cursor:pointer;
+    font-family:inherit;
 }
 
 .app{
-    max-width:1200px;
+    width:min(1200px,94%);
     margin:auto;
-    padding:20px;
+    padding:20px 0 40px;
 }
 
-/* HEADER */
 header{
     display:flex;
     align-items:center;
@@ -41,16 +38,21 @@ header{
 }
 
 header h1{
-    margin:0 0 5px;
+    margin:0;
     font-size:32px;
 }
 
 header p{
-    margin:0;
-    color:#aeb7d0;
+    color:#aeb8d0;
 }
 
-/* BUTTONS */
+.card{
+    background:rgba(16,22,40,.96);
+    border:1px solid #293552;
+    border-radius:22px;
+    box-shadow:0 15px 50px rgba(0,0,0,.35);
+}
+
 .primary{
     background:linear-gradient(135deg,#ff3154,#ff713f);
     color:white;
@@ -58,28 +60,27 @@ header p{
     border-radius:14px;
     font-size:17px;
     font-weight:bold;
-    box-shadow:0 8px 25px rgba(255,49,84,.25);
-}
-
-.primary:hover{
-    transform:scale(1.03);
 }
 
 .secondary{
-    background:#27304a;
-    color:white;
-    padding:12px 18px;
+    background:#29334d;
+    color:#fff;
+    padding:12px 20px;
     border-radius:12px;
 }
 
 .danger{
-    background:#481e2b;
+    background:#481f2b;
     color:#ff9eaa;
-    padding:12px 18px;
+    padding:12px 20px;
     border-radius:12px;
 }
 
-/* SCREENS */
+.big{
+    padding:16px 35px;
+    font-size:20px;
+}
+
 .screen{
     display:none;
 }
@@ -88,53 +89,27 @@ header p{
     display:block;
 }
 
-/* CARDS */
-.card{
-    background:rgba(16,22,40,.94);
-    border:1px solid #293452;
-    border-radius:22px;
-    box-shadow:0 15px 50px rgba(0,0,0,.3);
-}
-
-/* START */
 .intro{
     max-width:650px;
-    margin:60px auto;
+    margin:50px auto;
     padding:40px;
     text-align:center;
 }
 
-.monster-big{
+.monster{
     font-size:90px;
 }
 
-.intro h2{
-    font-size:32px;
-}
-
-.intro p{
-    color:#b7c0d5;
-    line-height:1.8;
-}
-
-.intro ul{
+.intro li{
     text-align:right;
-    line-height:2;
-    color:#dce3f4;
-}
-
-.big{
-    font-size:20px;
-    padding:16px 35px;
+    margin:12px 0;
 }
 
 .note{
+    color:#78839e;
     font-size:13px;
-    color:#78839e !important;
-    margin-top:25px;
 }
 
-/* TOP BAR */
 .topbar{
     display:flex;
     justify-content:space-around;
@@ -148,45 +123,46 @@ header p{
 
 .topbar span{
     display:block;
-    color:#8f9ab5;
+    color:#8e9ab5;
     font-size:13px;
 }
 
 .topbar strong{
-    display:block;
-    margin-top:5px;
     font-size:25px;
 }
 
-/* GAME */
-.game-grid{
+.game{
     display:grid;
-    grid-template-columns:minmax(0,2fr) minmax(280px,1fr);
+    grid-template-columns:2fr 1fr;
     gap:15px;
 }
 
-/* CAMERA */
 .camera-card{
     padding:14px;
 }
 
-.camera-wrap{
+.camera{
     position:relative;
+    background:#000;
     width:100%;
     aspect-ratio:16/10;
-    background:#020308;
-    border-radius:17px;
     overflow:hidden;
+    border-radius:17px;
 }
 
-#video,
-#overlay{
+#video,#canvas{
     position:absolute;
     width:100%;
     height:100%;
-    top:0;
-    left:0;
+    inset:0;
     object-fit:cover;
+}
+
+#video{
+    transform:scaleX(-1);
+}
+
+#canvas{
     transform:scaleX(-1);
 }
 
@@ -195,7 +171,7 @@ header p{
     inset:0;
     display:grid;
     place-items:center;
-    color:#8590aa;
+    color:#8792ad;
     font-size:20px;
 }
 
@@ -205,51 +181,43 @@ header p{
     color:#d9e0ef;
 }
 
-/* BOSS */
-.boss-card{
+.boss{
     padding:25px;
     text-align:center;
 }
 
-.boss-art{
+.bossEmoji{
     font-size:100px;
-    animation:float 2s ease-in-out infinite;
 }
 
-@keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-8px)}
-}
-
-.boss-card h2{
+.boss h2{
     font-size:28px;
 }
 
-.hp-label{
+.hpInfo{
     display:flex;
     justify-content:space-between;
-    color:#d2d9e9;
-    margin:18px 0 7px;
+    margin:15px 0 7px;
 }
 
-.hpbar{
+.hpBar{
+    width:100%;
     height:25px;
-    background:#29151c;
-    border-radius:99px;
+    border-radius:30px;
     overflow:hidden;
-    border:1px solid #54212e;
+    background:#29151c;
 }
 
-#hpFill{
+#hp{
     height:100%;
     width:100%;
-    background:linear-gradient(90deg,#ff2149,#ff733e);
-    transition:width .3s;
+    background:linear-gradient(90deg,#ff2048,#ff753d);
+    transition:.25s;
 }
 
 .damage{
-    color:#9ba6bf;
-    margin:18px 0 25px;
+    color:#9ca8c0;
+    margin:20px 0;
 }
 
 .controls{
@@ -257,35 +225,41 @@ header p{
     gap:10px;
 }
 
-/* REST */
 .rest{
     max-width:650px;
     margin:70px auto;
-    padding:50px 20px;
+    padding:50px;
     text-align:center;
 }
 
-.rest-icon{
+.restIcon{
     font-size:80px;
 }
 
-.rest h2{
-    font-size:34px;
-}
-
-#restTimer{
+#timer{
     font-size:90px;
-    font-weight:900;
-    color:#65e9ff;
+    font-weight:bold;
+    color:#64eaff;
     margin:15px 0;
 }
 
-/* WIN */
-#winScreen .intro{
-    margin-top:80px;
+.error{
+    display:none;
+    margin:15px 0;
+    padding:15px;
+    background:#441d28;
+    border:1px solid #8b3144;
+    color:#ffb5c0;
+    border-radius:12px;
+    text-align:center;
 }
 
-/* RESPONSIVE */
+.loading{
+    display:none;
+    color:#64eaff;
+    margin-top:15px;
+}
+
 @media(max-width:800px){
 
     header{
@@ -293,15 +267,15 @@ header p{
         align-items:stretch;
     }
 
-    header .primary{
+    header button{
         width:100%;
     }
 
-    .game-grid{
+    .game{
         grid-template-columns:1fr;
     }
 
-    .boss-card{
+    .boss{
         order:-1;
     }
 
@@ -310,7 +284,7 @@ header p{
         padding:25px;
     }
 
-    #restTimer{
+    #timer{
         font-size:65px;
     }
 }
@@ -322,182 +296,180 @@ header p{
 <div class="app">
 
 <header>
-    <div>
-        <h1>⚔️ تحدي البوس</h1>
-        <p>اهزم الوحش بعدّات الـ Crunch</p>
-    </div>
 
-    <button class="primary" id="startBtn">
-        🎮 ابدأ التحدي
-    </button>
+<div>
+<h1>⚔️ تحدي البوس</h1>
+<p>اهزم الوحوش بعدّات الـ Crunch</p>
+</div>
+
+<button id="headerStart" class="primary">
+🎮 ابدأ التحدي
+</button>
+
 </header>
 
 
-<!-- START SCREEN -->
+<!-- START -->
 
-<section id="startScreen" class="screen active">
+<section id="start" class="screen active">
 
 <div class="card intro">
 
-    <div class="monster-big">👹</div>
+<div class="monster">👹</div>
 
-    <h2>جاهز لتحدي البوس؟</h2>
+<h2>جاهز؟</h2>
 
-    <p>
-        اضغط ابدأ، اسمح باستخدام الكاميرا،
-        ثم قم بتمرين Crunch أمام الكاميرا.
-    </p>
+<p>
+اضغط على ابدأ للسماح للكاميرا بتتبع جسمك.
+</p>
 
-    <ul>
-        <li>👹 البوس الأول: 20 HP</li>
-        <li>💥 كل Crunch صحيحة = −1 HP</li>
-        <li>👹 البوس الثاني: 30 HP</li>
-        <li>🔥 كل مرحلة تزيد 10 HP</li>
-        <li>⏱️ استراحة دقيقتين بعد كل بوس</li>
-    </ul>
+<ul>
+<li>❤️ البوس الأول: 20 HP</li>
+<li>💥 كل Crunch صحيحة = −1 HP</li>
+<li>👹 البوس الثاني: 30 HP</li>
+<li>🔥 كل مرحلة تزيد 10 HP</li>
+<li>⏱️ استراحة دقيقتين بعد كل بوس</li>
+</ul>
 
-    <button class="primary big" id="startBtn2">
-        🚀 ابدأ الآن
-    </button>
+<button id="start" class="primary big">
+🚀 ابدأ الآن
+</button>
 
-    <p class="note">
-        استخدم الكاميرا في مكان آمن وثابت.
-    </p>
+<div id="loading" class="loading">
+⏳ جاري تشغيل الكاميرا وتتبع الجسم...
+</div>
+
+<div id="error" class="error"></div>
+
+<p class="note">
+يجب السماح للمتصفح باستخدام الكاميرا.
+</p>
 
 </div>
 
 </section>
 
 
-<!-- GAME SCREEN -->
+<!-- GAME -->
 
-<section id="gameScreen" class="screen">
+<section id="game" class="screen">
 
 <div class="card topbar">
 
-    <div>
-        <span>المرحلة</span>
-        <strong id="level">1</strong>
-    </div>
+<div>
+<span>البوس</span>
+<strong id="level">1</strong>
+</div>
 
-    <div>
-        <span>العدات</span>
-        <strong id="reps">0</strong>
-    </div>
+<div>
+<span>العدات</span>
+<strong id="reps">0</strong>
+</div>
 
-    <div>
-        <span>الحالة</span>
-        <strong id="poseState">استعد</strong>
-    </div>
+<div>
+<span>الحالة</span>
+<strong id="state">استعد</strong>
+</div>
 
 </div>
 
 
-<div class="game-grid">
+<div class="game">
 
-<!-- CAMERA -->
+<div class="card camera-card">
 
-<div class="camera-card card">
+<div class="camera">
 
-    <div class="camera-wrap">
+<video id="video" autoplay muted playsinline></video>
 
-        <video
-            id="video"
-            autoplay
-            muted
-            playsinline>
-        </video>
+<canvas id="canvas"></canvas>
 
-        <canvas id="overlay"></canvas>
+<div id="cameraMessage">
+📷 الكاميرا
+</div>
 
-        <div id="cameraMessage">
-            📷 الكاميرا ستظهر هنا
-        </div>
+</div>
 
-    </div>
-
-    <div class="instruction" id="instruction">
-        استلق أمام الكاميرا وابدأ الـ Crunch
-    </div>
+<div class="instruction" id="instruction">
+استلقِ أمام الكاميرا وابدأ الـ Crunch
+</div>
 
 </div>
 
 
-<!-- BOSS -->
+<div class="card boss">
 
-<aside class="boss-card card">
+<div class="bossEmoji" id="bossEmoji">
+👹
+</div>
 
-    <div class="boss-art" id="bossArt">
-        👹
-    </div>
+<h2 id="bossName">
+ملك الكرنش
+</h2>
 
-    <h2 id="bossName">
-        ملك الكرنش
-    </h2>
+<div class="hpInfo">
 
-    <div class="hp-label">
-        <span>❤️ HP</span>
-        <span id="hpText">20 / 20</span>
-    </div>
+<span>❤️ HP</span>
 
-    <div class="hpbar">
-        <div id="hpFill"></div>
-    </div>
+<span id="hpText">
+20 / 20
+</span>
 
-    <div class="damage">
-        كل عدة صحيحة
-        <b>−1 HP</b>
-    </div>
+</div>
 
-    <div class="controls">
+<div class="hpBar">
 
-        <button class="secondary" id="pauseBtn">
-            ⏸ إيقاف مؤقت
-        </button>
+<div id="hp"></div>
 
-        <button class="danger" id="stopBtn">
-            ✕ إنهاء
-        </button>
+</div>
 
-    </div>
+<div class="damage">
+كل عدة صحيحة = <b>−1 HP</b>
+</div>
 
-</aside>
+<div class="controls">
+
+<button id="pause" class="secondary">
+⏸ إيقاف
+</button>
+
+<button id="stop" class="danger">
+✕ إنهاء
+</button>
+
+</div>
+
+</div>
 
 </div>
 
 </section>
 
 
-<!-- REST SCREEN -->
+<!-- REST -->
 
-<section id="restScreen" class="screen">
+<section id="rest" class="screen">
 
 <div class="card rest">
 
-    <div class="rest-icon">
-        🛡️
-    </div>
+<div class="restIcon">🛡️</div>
 
-    <h2>
-        أحسنت! هزمت البوس 💥
-    </h2>
+<h2>💥 هزمت البوس!</h2>
 
-    <p>
-        خذ استراحة واستعد للجولة التالية.
-    </p>
+<p>استرح قبل الجولة القادمة</p>
 
-    <div id="restTimer">
-        02:00
-    </div>
+<div id="timer">
+02:00
+</div>
 
-    <p>
-        البوس القادم:
-        <b id="nextBoss">2</b>
-    </p>
+<p>
+البوس القادم:
+<b id="next">2</b>
+</p>
 
-    <button class="secondary" id="skipRest">
-        ⏩ تخطي الاستراحة
-    </button>
+<button id="skip" class="secondary">
+⏩ تخطي
+</button>
 
 </div>
 
@@ -506,25 +478,19 @@ header p{
 
 <!-- WIN -->
 
-<section id="winScreen" class="screen">
+<section id="win" class="screen">
 
 <div class="card intro">
 
-    <div class="monster-big">
-        🏆
-    </div>
+<div class="monster">🏆</div>
 
-    <h2>
-        انتصرت!
-    </h2>
+<h2>انتــصرت!</h2>
 
-    <p id="winText">
-        أكملت التحدي.
-    </p>
+<p id="result"></p>
 
-    <button class="primary big" id="againBtn">
-        🔁 تحدي جديد
-    </button>
+<button id="again" class="primary big">
+🔁 تحدي جديد
+</button>
 
 </div>
 
@@ -533,962 +499,969 @@ header p{
 </div>
 
 
-<!--
-    MediaPipe
-    مكتبة تتبع الجسم
--->
-
 <script type="module">
 
-import {
-    PoseLandmarker,
-    FilesetResolver,
-    DrawingUtils
-}
-from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/+esm";
+/*
+====================================
+ تحميل MediaPipe
+====================================
+*/
+
+const MEDIAPIPE_URL =
+"https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/+esm";
+
+let PoseLandmarker;
+let FilesetResolver;
+let DrawingUtils;
 
 
-/* =========================
-   VARIABLES
-========================= */
+/*
+====================================
+ العناصر
+====================================
+*/
 
-const $ = id => document.getElementById(id);
+const $ = id =>
+document.getElementById(id);
 
-const screens = [
-    "startScreen",
-    "gameScreen",
-    "restScreen",
-    "winScreen"
-];
 
-let poseLandmarker;
-let drawingUtils;
-let stream;
+const startScreen = $("start");
+const gameScreen = $("game");
+const restScreen = $("rest");
+const winScreen = $("win");
 
-let running = false;
+
+let cameraStream = null;
+let pose = null;
+let draw = null;
+
+let playing = false;
 let paused = false;
 
 let level = 1;
-
 let hp = 20;
-let maxHp = 20;
+let maxHP = 20;
 
-let totalReps = 0;
+let reps = 0;
 
-let posePhase = "down";
+let phase = "down";
 
 let lastVideoTime = -1;
-
-let animationId = null;
+let animation = null;
 
 let restInterval = null;
 
-let lastRepTime = 0;
+let lastRep = 0;
 
 
-/* =========================
-   BOSSES
-========================= */
+/*
+====================================
+ البوسات
+====================================
+*/
 
 const bosses = [
 
-    ["ملك الكرنش","👹"],
+["ملك الكرنش","👹"],
 
-    ["غول الحديد","👺"],
+["غول الحديد","👺"],
 
-    ["وحش الصخر","👿"],
+["وحش الصخر","👿"],
 
-    ["سيد الظلام","😈"],
+["سيد الظلام","😈"],
 
-    ["الزعيم النهائي","🐲"]
+["التنين النهائي","🐲"]
 
 ];
 
 
-/* =========================
-   SCREEN
-========================= */
+/*
+====================================
+ عرض شاشة
+====================================
+*/
 
-function showScreen(id){
+function screen(element){
 
-    screens.forEach(screen => {
+startScreen.classList.remove("active");
+gameScreen.classList.remove("active");
+restScreen.classList.remove("active");
+winScreen.classList.remove("active");
 
-        $(screen).classList.toggle(
-            "active",
-            screen === id
-        );
-
-    });
-
-}
-
-
-/* =========================
-   BOSS
-========================= */
-
-function setBoss(){
-
-    maxHp = 20 + ((level - 1) * 10);
-
-    hp = maxHp;
-
-    $("level").textContent = level;
-
-    $("hpText").textContent =
-        `${hp} / ${maxHp}`;
-
-    $("hpFill").style.width = "100%";
-
-    const boss =
-        bosses[Math.min(
-            level - 1,
-            bosses.length - 1
-        )];
-
-    $("bossName").textContent =
-        boss[0];
-
-    $("bossArt").textContent =
-        boss[1];
+element.classList.add("active");
 
 }
 
 
-/* =========================
-   TIMER
-========================= */
+/*
+====================================
+ رسالة الخطأ
+====================================
+*/
 
-function formatTime(seconds){
+function showError(message){
 
-    return (
-        String(Math.floor(seconds / 60))
-        .padStart(2,"0")
-        +
-        ":" +
-        String(seconds % 60)
-        .padStart(2,"0")
-    );
+$("error").style.display = "block";
+
+$("error").textContent =
+"❌ " + message;
 
 }
 
 
-/* =========================
-   CAMERA
-========================= */
+/*
+====================================
+ تشغيل الكاميرا
+====================================
+*/
 
-async function setupCamera(){
+async function camera(){
 
-    stream =
-        await navigator.mediaDevices.getUserMedia({
+if(!navigator.mediaDevices){
 
-            video:{
-                facingMode:"user",
-
-                width:{
-                    ideal:1280
-                },
-
-                height:{
-                    ideal:720
-                }
-            },
-
-            audio:false
-
-        });
-
-
-    $("video").srcObject =
-        stream;
-
-    await $("video").play();
-
-    $("cameraMessage").style.display =
-        "none";
+throw new Error(
+"المتصفح لا يدعم الكاميرا."
+);
 
 }
 
 
-/* =========================
-   MEDIAPIPE
-========================= */
+cameraStream =
+await navigator.mediaDevices.getUserMedia({
 
-async function setupPose(){
+video:{
+facingMode:"user",
+width:{ideal:1280},
+height:{ideal:720}
+},
 
-    const vision =
-        await FilesetResolver.forVisionTasks(
+audio:false
 
-            "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm"
-
-        );
-
-
-    poseLandmarker =
-        await PoseLandmarker.createFromOptions(
-
-            vision,
-
-            {
-
-                baseOptions:{
-
-                    modelAssetPath:
-
-                    "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task",
-
-                    delegate:"GPU"
-
-                },
-
-                runningMode:"VIDEO",
-
-                numPoses:1,
-
-                minPoseDetectionConfidence:.5,
-
-                minPosePresenceConfidence:.5,
-
-                minTrackingConfidence:.5
-
-            }
-
-        );
+});
 
 
-    drawingUtils =
-        new DrawingUtils(
-            $("overlay").getContext("2d")
-        );
+$("video").srcObject =
+cameraStream;
+
+
+await $("video").play();
+
+
+$("cameraMessage").style.display =
+"none";
 
 }
 
 
-/* =========================
-   CALCULATE ANGLE
-========================= */
+/*
+====================================
+ تحميل MediaPipe
+====================================
+*/
+
+async function loadPose(){
+
+$("loading").textContent =
+"⏳ جاري تحميل نظام تتبع الجسم...";
+
+
+const module =
+await import(MEDIAPIPE_URL);
+
+
+PoseLandmarker =
+module.PoseLandmarker;
+
+FilesetResolver =
+module.FilesetResolver;
+
+DrawingUtils =
+module.DrawingUtils;
+
+
+const vision =
+await FilesetResolver.forVisionTasks(
+
+"https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm"
+
+);
+
+
+pose =
+await PoseLandmarker.createFromOptions(
+
+vision,
+
+{
+
+baseOptions:{
+
+modelAssetPath:
+
+"https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task",
+
+delegate:"GPU"
+
+},
+
+runningMode:"VIDEO",
+
+numPoses:1,
+
+minPoseDetectionConfidence:.5,
+
+minPosePresenceConfidence:.5,
+
+minTrackingConfidence:.5
+
+}
+
+);
+
+
+draw =
+new DrawingUtils(
+$("canvas").getContext("2d")
+);
+
+}
+
+
+/*
+====================================
+ زاوية
+====================================
+*/
 
 function angle(a,b,c){
 
-    const ab = {
-        x:a.x-b.x,
-        y:a.y-b.y
-    };
+const ab = {
 
-    const cb = {
-        x:c.x-b.x,
-        y:c.y-b.y
-    };
+x:a.x-b.x,
+y:a.y-b.y
 
+};
 
-    const dot =
-        ab.x * cb.x +
-        ab.y * cb.y;
+const cb = {
 
+x:c.x-b.x,
+y:c.y-b.y
 
-    const magnitude =
-        Math.hypot(
-            ab.x,
-            ab.y
-        )
-        *
-        Math.hypot(
-            cb.x,
-            cb.y
-        );
+};
 
 
-    if(!magnitude)
-        return 0;
+const dot =
+ab.x*cb.x +
+ab.y*cb.y;
 
 
-    return Math.acos(
+const mag =
+Math.hypot(ab.x,ab.y) *
+Math.hypot(cb.x,cb.y);
 
-        Math.max(
-            -1,
-            Math.min(
-                1,
-                dot / magnitude
-            )
-        )
 
-    ) * 180 / Math.PI;
+if(!mag)
+return 0;
+
+
+return Math.acos(
+
+Math.max(
+-1,
+Math.min(1,dot/mag)
+)
+
+)*180/Math.PI;
 
 }
 
 
-/* =========================
-   CRUNCH DETECTION
-========================= */
+/*
+====================================
+ اكتشاف Crunch
+====================================
+*/
 
-function detectCrunch(landmarks){
+function crunch(landmarks){
 
-    /*
-       الكتف
-       الورك
-       الركبة
+/*
+11 = كتف
+23 = ورك
+25 = ركبة
+*/
 
-       نحسب زاوية الجسم.
-    */
+const shoulder =
+landmarks[11];
 
-    const shoulder =
-        landmarks[11];
+const hip =
+landmarks[23];
 
-    const hip =
-        landmarks[23];
-
-    const knee =
-        landmarks[25];
-
-
-    if(
-        !shoulder ||
-        !hip ||
-        !knee
-    ){
-        return null;
-    }
+const knee =
+landmarks[25];
 
 
-    const torsoAngle =
-        angle(
-            shoulder,
-            hip,
-            knee
-        );
+if(!shoulder ||
+!hip ||
+!knee){
 
-
-    const vertical =
-        Math.abs(
-            shoulder.y -
-            hip.y
-        );
-
-
-    /*
-       وضعية النزول
-    */
-
-    if(
-        torsoAngle > 105 &&
-        vertical > .18
-    ){
-
-        return "down";
-
-    }
-
-
-    /*
-       وضعية الصعود
-    */
-
-    if(
-        torsoAngle < 82 ||
-        vertical < .14
-    ){
-
-        return "up";
-
-    }
-
-
-    return posePhase;
+return null;
 
 }
 
 
-/* =========================
-   HIT BOSS
-========================= */
-
-function hitBoss(){
-
-    const now =
-        performance.now();
+const a =
+angle(
+shoulder,
+hip,
+knee
+);
 
 
-    /*
-       منع العد السريع جداً
-    */
-
-    if(
-        now - lastRepTime < 650
-    ){
-        return;
-    }
+const vertical =
+Math.abs(
+shoulder.y -
+hip.y
+);
 
 
-    lastRepTime = now;
+/*
+ وضعية النزول
+*/
 
+if(
+a > 105 &&
+vertical > .18
+){
 
-    totalReps++;
-
-
-    $("reps").textContent =
-        totalReps;
-
-
-    hp =
-        Math.max(
-            0,
-            hp - 1
-        );
-
-
-    $("hpText").textContent =
-        `${hp} / ${maxHp}`;
-
-
-    $("hpFill").style.width =
-        `${(hp / maxHp) * 100}%`;
-
-
-    $("poseState").textContent =
-        "💥 ضربة!";
-
-
-    setTimeout(() => {
-
-        if(
-            running &&
-            !paused
-        ){
-
-            $("poseState").textContent =
-                "استمر";
-
-        }
-
-    },350);
-
-
-    if(hp === 0){
-
-        finishBoss();
-
-    }
+return "down";
 
 }
 
 
-/* =========================
-   CAMERA FRAME
-========================= */
+/*
+ وضعية الصعود
+*/
 
-function processFrame(){
+if(
+a < 82 ||
+vertical < .14
+){
 
-    if(
-        !running ||
-        paused ||
-        !poseLandmarker
-    ){
-
-        return;
-    }
-
-
-    const video =
-        $("video");
-
-    const canvas =
-        $("overlay");
-
-
-    canvas.width =
-        video.videoWidth || 1280;
-
-    canvas.height =
-        video.videoHeight || 720;
-
-
-    const ctx =
-        canvas.getContext("2d");
-
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-
-    if(
-        video.currentTime !==
-        lastVideoTime
-    ){
-
-        const result =
-            poseLandmarker.detectForVideo(
-                video,
-                performance.now()
-            );
-
-
-        if(
-            result.landmarks &&
-            result.landmarks.length
-        ){
-
-            const landmarks =
-                result.landmarks[0];
-
-
-            /*
-               رسم Skeleton
-            */
-
-            drawingUtils.drawLandmarks(
-                landmarks,
-                {
-                    radius:3
-                }
-            );
-
-
-            drawingUtils.drawConnectors(
-                landmarks,
-                PoseLandmarker.POSE_CONNECTIONS
-            );
-
-
-            /*
-               اكتشاف الحركة
-            */
-
-            const state =
-                detectCrunch(
-                    landmarks
-                );
-
-
-            if(
-                state === "up" &&
-                posePhase === "down"
-            ){
-
-                posePhase = "up";
-
-            }
-
-
-            else if(
-                state === "down" &&
-                posePhase === "up"
-            ){
-
-                posePhase = "down";
-
-                hitBoss();
-
-            }
-
-
-            if(
-                posePhase === "up"
-            ){
-
-                $("poseState").textContent =
-                    "⬆️ ارفع جسمك";
-
-            }
-
-            else{
-
-                $("poseState").textContent =
-                    "⬇️ انزل";
-
-            }
-
-        }
-
-        else{
-
-            $("poseState").textContent =
-                "👤 لم أجد الجسم";
-
-        }
-
-
-        lastVideoTime =
-            video.currentTime;
-
-    }
-
-
-    animationId =
-        requestAnimationFrame(
-            processFrame
-        );
+return "up";
 
 }
 
 
-/* =========================
-   STOP CAMERA
-========================= */
-
-function stopCamera(){
-
-    if(stream){
-
-        stream
-        .getTracks()
-        .forEach(
-            track =>
-                track.stop()
-        );
-
-        stream = null;
-
-    }
-
-
-    if(animationId){
-
-        cancelAnimationFrame(
-            animationId
-        );
-
-        animationId = null;
-
-    }
+return phase;
 
 }
 
 
-/* =========================
-   REST
-========================= */
+/*
+====================================
+ ضرب البوس
+====================================
+*/
 
-function startRest(){
+function hit(){
 
-    running = false;
-
-
-    if(animationId){
-
-        cancelAnimationFrame(
-            animationId
-        );
-
-    }
+const now =
+performance.now();
 
 
-    showScreen(
-        "restScreen"
-    );
+if(
+now-lastRep < 650
+){
 
-
-    $("nextBoss").textContent =
-        level + 1;
-
-
-    let remaining = 120;
-
-
-    $("restTimer").textContent =
-        formatTime(remaining);
-
-
-    clearInterval(
-        restInterval
-    );
-
-
-    restInterval =
-        setInterval(() => {
-
-            remaining--;
-
-
-            $("restTimer").textContent =
-                formatTime(remaining);
-
-
-            if(
-                remaining <= 0
-            ){
-
-                clearInterval(
-                    restInterval
-                );
-
-                nextBoss();
-
-            }
-
-        },1000);
+return;
 
 }
 
 
-/* =========================
-   NEXT BOSS
-========================= */
-
-function nextBoss(){
-
-    clearInterval(
-        restInterval
-    );
+lastRep = now;
 
 
-    /*
-       بعد 10 مراحل
-    */
-
-    if(level >= 10){
-
-        stopCamera();
+reps++;
 
 
-        $("winText").textContent =
-            `أكملت ${level} مراحل وحققت ${totalReps} عدة!`;
+$("reps").textContent =
+reps;
 
 
-        showScreen(
-            "winScreen"
-        );
+hp =
+Math.max(
+0,
+hp-1
+);
 
 
-        return;
-
-    }
-
-
-    level++;
+$("hpText").textContent =
+`${hp} / ${maxHP}`;
 
 
-    setBoss();
+$("hp").style.width =
+`${(hp/maxHP)*100}%`;
 
 
-    showScreen(
-        "gameScreen"
-    );
+$("state").textContent =
+"💥 ضربة!";
 
 
-    running = true;
+if(hp <= 0){
 
-    paused = false;
+defeat();
 
-    posePhase = "down";
-
-
-    $("poseState").textContent =
-        "استعد";
-
-
-    processFrame();
+}
 
 }
 
 
-/* =========================
-   BOSS DEFEATED
-========================= */
+/*
+====================================
+ تشغيل الفريمات
+====================================
+*/
 
-function finishBoss(){
+function loop(){
 
-    startRest();
+if(
+!playing ||
+paused ||
+!pose
+){
+
+return;
 
 }
 
 
-/* =========================
-   START GAME
-========================= */
+const video =
+$("video");
+
+const canvas =
+$("canvas");
+
+
+canvas.width =
+video.videoWidth ||
+1280;
+
+
+canvas.height =
+video.videoHeight ||
+720;
+
+
+if(
+video.currentTime !==
+lastVideoTime
+){
+
+const ctx =
+canvas.getContext("2d");
+
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+
+const result =
+pose.detectForVideo(
+video,
+performance.now()
+);
+
+
+if(
+result.landmarks &&
+result.landmarks.length
+){
+
+const landmarks =
+result.landmarks[0];
+
+
+/*
+ رسم الهيكل
+*/
+
+draw.drawLandmarks(
+landmarks,
+{radius:4}
+);
+
+
+draw.drawConnectors(
+landmarks,
+PoseLandmarker.POSE_CONNECTIONS
+);
+
+
+/*
+ قراءة الحركة
+*/
+
+const state =
+crunch(landmarks);
+
+
+if(
+state === "up" &&
+phase === "down"
+){
+
+phase = "up";
+
+}
+
+
+else if(
+state === "down" &&
+phase === "up"
+){
+
+phase = "down";
+
+hit();
+
+}
+
+
+$("state").textContent =
+phase === "up"
+? "⬆️ ارفع"
+: "⬇️ انزل";
+
+}
+
+
+else{
+
+$("state").textContent =
+"👤 لم أجد الجسم";
+
+}
+
+
+lastVideoTime =
+video.currentTime;
+
+}
+
+
+animation =
+requestAnimationFrame(loop);
+
+}
+
+
+/*
+====================================
+ إعداد البوس
+====================================
+*/
+
+function boss(){
+
+maxHP =
+20 + ((level-1)*10);
+
+hp = maxHP;
+
+
+$("level").textContent =
+level;
+
+
+$("hpText").textContent =
+`${hp} / ${maxHP}`;
+
+
+$("hp").style.width =
+"100%";
+
+
+const data =
+bosses[
+Math.min(
+level-1,
+bosses.length-1
+)
+];
+
+
+$("bossName").textContent =
+data[0];
+
+$("bossEmoji").textContent =
+data[1];
+
+}
+
+
+/*
+====================================
+ بدء اللعبة
+====================================
+*/
 
 async function startGame(){
 
-    $("startBtn").disabled = true;
+$("error").style.display =
+"none";
 
-    $("startBtn2").disabled = true;
-
-
-    try{
-
-        /*
-           الكاميرا تحتاج HTTPS
-           أو localhost
-        */
-
-        if(
-            !window.isSecureContext
-        ){
-
-            alert(
-                "الكاميرا تحتاج HTTPS أو localhost."
-            );
-
-            return;
-
-        }
+$("loading").style.display =
+"block";
 
 
-        await setupCamera();
+$("start").disabled =
+true;
 
 
-        await setupPose();
+try{
 
+/*
+ التأكد من HTTPS
+*/
 
-        level = 1;
+if(
+location.protocol !== "https:" &&
+location.hostname !== "localhost" &&
+location.hostname !== "127.0.0.1"
+){
 
-        totalReps = 0;
-
-        $("reps").textContent =
-            "0";
-
-
-        setBoss();
-
-
-        showScreen(
-            "gameScreen"
-        );
-
-
-        running = true;
-
-        paused = false;
-
-        posePhase = "down";
-
-
-        $("instruction").textContent =
-            "انزل لوضعية البداية، ثم ارفع كتفيك. كل دورة كاملة = ضربة للبوس.";
-
-
-        processFrame();
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-
-        alert(
-            "تعذر تشغيل الكاميرا. تأكد من إعطاء إذن الكاميرا واستخدام HTTPS أو localhost."
-        );
-
-    }
-
-    finally{
-
-        $("startBtn").disabled =
-            false;
-
-        $("startBtn2").disabled =
-            false;
-
-    }
+throw new Error(
+"الموقع يجب أن يعمل عبر HTTPS. تأكد أن رابط Vercel يبدأ بـ https://"
+);
 
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
-
-$("startBtn").onclick =
-    startGame;
-
-
-$("startBtn2").onclick =
-    startGame;
-
-
 /*
-   تخطي الاستراحة
+ الكاميرا
 */
 
-$("skipRest").onclick =
-    nextBoss;
+await camera();
 
 
 /*
-   Pause
+ MediaPipe
 */
 
-$("pauseBtn").onclick =
-    () => {
-
-        paused =
-            !paused;
-
-
-        $("pauseBtn").textContent =
-            paused
-            ? "▶️ متابعة"
-            : "⏸ إيقاف مؤقت";
-
-
-        if(!paused){
-
-            running = true;
-
-            processFrame();
-
-        }
-
-    };
+await loadPose();
 
 
 /*
-   Stop
+ بداية اللعبة
 */
 
-$("stopBtn").onclick =
-    () => {
+level = 1;
+reps = 0;
 
-        if(
-            confirm(
-                "هل تريد إنهاء التحدي؟"
-            )
-        ){
-
-            running = false;
-
-            clearInterval(
-                restInterval
-            );
-
-            stopCamera();
+$("reps").textContent =
+"0";
 
 
-            showScreen(
-                "startScreen"
-            );
+boss();
 
-        }
 
-    };
+screen(gameScreen);
+
+
+playing = true;
+paused = false;
+
+phase = "down";
+
+
+$("instruction").textContent =
+"انزل أولاً، ثم ارفع كتفيك. كل حركة كاملة تنقص HP.";
+
+
+loop();
+
+}
+
+catch(error){
+
+console.error(error);
+
+showError(
+error.message ||
+"حدث خطأ أثناء تشغيل اللعبة."
+);
+
+}
+
+finally{
+
+$("start").disabled =
+false;
+
+$("loading").style.display =
+"none";
+
+}
+
+}
 
 
 /*
-   Play Again
+====================================
+ هزيمة البوس
+====================================
 */
 
-$("againBtn").onclick =
-    () => {
+function defeat(){
 
-        showScreen(
-            "startScreen"
-        );
+playing = false;
 
-    };
+
+if(animation)
+cancelAnimationFrame(animation);
+
+
+$("next").textContent =
+level+1;
+
+
+screen(restScreen);
+
+
+let seconds = 120;
+
+
+$("timer").textContent =
+"02:00";
+
+
+clearInterval(restInterval);
+
+
+restInterval =
+setInterval(()=>{
+
+seconds--;
+
+
+const min =
+String(
+Math.floor(seconds/60)
+).padStart(2,"0");
+
+
+const sec =
+String(
+seconds%60
+).padStart(2,"0");
+
+
+$("timer").textContent =
+`${min}:${sec}`;
+
+
+if(seconds <= 0){
+
+clearInterval(
+restInterval
+);
+
+nextBoss();
+
+}
+
+},1000);
+
+}
 
 
 /*
-   عند إغلاق الصفحة
+====================================
+ البوس القادم
+====================================
+*/
+
+function nextBoss(){
+
+clearInterval(
+restInterval
+);
+
+
+if(level >= 10){
+
+finish();
+
+return;
+
+}
+
+
+level++;
+
+
+boss();
+
+
+screen(gameScreen);
+
+
+playing = true;
+
+paused = false;
+
+phase = "down";
+
+
+loop();
+
+}
+
+
+/*
+====================================
+ النهاية
+====================================
+*/
+
+function finish(){
+
+playing = false;
+
+
+if(cameraStream){
+
+cameraStream
+.getTracks()
+.forEach(
+track =>
+track.stop()
+);
+
+}
+
+
+$("result").textContent =
+`أكملت 10 مراحل وحققت ${reps} عدة! 💪`;
+
+
+screen(winScreen);
+
+}
+
+
+/*
+====================================
+ Pause
+====================================
+*/
+
+$("pause").onclick =
+()=>{
+
+paused = !paused;
+
+
+$("pause").textContent =
+paused
+? "▶️ متابعة"
+: "⏸ إيقاف";
+
+
+if(!paused){
+
+loop();
+
+}
+
+};
+
+
+/*
+====================================
+ Stop
+====================================
+*/
+
+$("stop").onclick =
+()=>{
+
+playing = false;
+
+
+if(animation)
+cancelAnimationFrame(animation);
+
+
+if(cameraStream){
+
+cameraStream
+.getTracks()
+.forEach(
+track =>
+track.stop()
+);
+
+}
+
+
+screen(startScreen);
+
+};
+
+
+/*
+====================================
+ الأزرار
+====================================
+*/
+
+$("start").onclick =
+startGame;
+
+
+$("headerStart").onclick =
+startGame;
+
+
+$("skip").onclick =
+nextBoss;
+
+
+$("again").onclick =
+()=>{
+
+screen(startScreen);
+
+};
+
+
+/*
+====================================
+ تنظيف عند إغلاق الموقع
+====================================
 */
 
 window.addEventListener(
-    "beforeunload",
-    stopCamera
+"beforeunload",
+()=>{
+
+if(cameraStream){
+
+cameraStream
+.getTracks()
+.forEach(
+track =>
+track.stop()
 );
+
+}
+
+});
 
 </script>
 

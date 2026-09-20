@@ -1,141 +1,744 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
 content="width=device-width,
 initial-scale=1,
 maximum-scale=1,
-user-scalable=no,
-viewport-fit=cover">
+user-scalable=no">
 
-<title>⚔️ تحدي البوس</title>
+<title>FORGE — Fitness Challenge</title>
 
-<!-- MediaPipe -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js"></script>
 
 <style>
 
+/* =====================================================
+   RESET
+===================================================== */
+
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
     -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+
+    --bg:#07040f;
+    --bg2:#0d081b;
+
+    --card:#110b20;
+    --card2:#170e2b;
+
+    --purple:#8b5cf6;
+    --purple2:#a855f7;
+    --purple3:#c084fc;
+
+    --pink:#d946ef;
+
+    --text:#ffffff;
+    --muted:#9d91b5;
+
+    --border:rgba(168,85,247,.20);
+
+    --success:#34d399;
+
+    --danger:#fb456f;
+
+    --gold:#fbbf24;
 }
 
 html,
 body{
-    margin:0;
+
     width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#000;
-    font-family:Arial,Tahoma,sans-serif;
-    color:white;
-}
-
-/* =========================================
-START SCREEN
-========================================= */
-
-#startScreen{
-    width:100%;
-    height:100%;
-    overflow:auto;
-    background:
-    radial-gradient(circle at top,#27335f,#090c17 60%,#020308);
-    padding:25px;
-}
-
-.startBox{
-    width:min(650px,100%);
-    margin:30px auto;
-    padding:35px 25px;
-    border-radius:25px;
-
-    background:rgba(15,21,39,.97);
-
-    border:1px solid #293858;
-
-    box-shadow:
-    0 20px 70px rgba(0,0,0,.5);
-
-    text-align:center;
-}
-
-.startMonster{
-    font-size:100px;
-}
-
-.startBox h1{
-    font-size:35px;
-    margin:10px 0;
-}
-
-.startBox p{
-    color:#b4bfd5;
-    font-size:18px;
-}
-
-.rules{
-    text-align:right;
-    line-height:2;
-    font-size:17px;
-    margin:25px 0;
-}
-
-.startButton{
-    width:100%;
-    padding:20px;
-
-    border:0;
-    border-radius:17px;
+    min-height:100%;
 
     background:
-    linear-gradient(
-        135deg,
-        #ff244d,
-        #ff713d
-    );
+        radial-gradient(
+            circle at 15% 0%,
+            rgba(139,92,246,.18),
+            transparent 30%
+        ),
 
-    color:white;
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(217,70,239,.10),
+            transparent 25%
+        ),
 
-    font-size:23px;
-    font-weight:bold;
+        var(--bg);
 
-    cursor:pointer;
+    color:var(--text);
+
+    font-family:
+        Inter,
+        Arial,
+        Tahoma,
+        sans-serif;
+
 }
 
-.startButton:active{
-    transform:scale(.98);
+body{
+    overflow-x:hidden;
 }
 
-#loading{
-    display:none;
-    margin-top:15px;
-    color:#62eaff;
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+    width:5px;
 }
 
-#error{
-    display:none;
-    margin-top:15px;
-    padding:15px;
+::-webkit-scrollbar-thumb{
+    background:#3d2368;
+    border-radius:20px;
+}
 
-    background:#481e2b;
-    border:1px solid #9b3850;
+
+/* =====================================================
+   APP
+===================================================== */
+
+.app{
+
+    width:min(1100px,94%);
+
+    margin:auto;
+
+    padding:
+        25px
+        0
+        50px;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    margin-bottom:30px;
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.logoIcon{
+
+    width:48px;
+    height:48px;
+
+    display:grid;
+    place-items:center;
 
     border-radius:15px;
 
-    color:#ffb9c5;
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--pink)
+        );
 
-    line-height:1.7;
+    box-shadow:
+        0 10px 30px
+        rgba(139,92,246,.30);
+
+    font-size:24px;
+
 }
 
-/* =========================================
-GAME
-========================================= */
+.logo h1{
+
+    font-size:25px;
+
+    letter-spacing:2px;
+
+}
+
+.logo p{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    margin-top:2px;
+
+}
+
+
+/* =====================================================
+   LEVEL BAR
+===================================================== */
+
+.profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.levelBadge{
+
+    padding:
+        8px
+        12px;
+
+    border-radius:12px;
+
+    background:
+        rgba(139,92,246,.12);
+
+    border:
+        1px solid
+        var(--border);
+
+    font-weight:bold;
+
+    color:#d8c4ff;
+
+}
+
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.card{
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(23,14,43,.95),
+            rgba(12,8,24,.95)
+        );
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:24px;
+
+    box-shadow:
+        0 20px 70px
+        rgba(0,0,0,.30);
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.dashboard{
+
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        1fr;
+
+    gap:18px;
+
+    margin-bottom:20px;
+
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+    padding:32px;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.hero:after{
+
+    content:"";
+
+    position:absolute;
+
+    width:240px;
+    height:240px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(139,92,246,.25),
+            transparent 70%
+        );
+
+    left:-80px;
+    top:-80px;
+
+    pointer-events:none;
+
+}
+
+.heroSmall{
+
+    color:
+        var(--purple3);
+
+    font-weight:bold;
+
+    font-size:13px;
+
+    letter-spacing:1px;
+
+    margin-bottom:10px;
+
+}
+
+.hero h2{
+
+    font-size:
+        clamp(30px,5vw,48px);
+
+    line-height:1.1;
+
+    margin-bottom:15px;
+
+}
+
+.hero p{
+
+    color:var(--muted);
+
+    line-height:1.7;
+
+    max-width:550px;
+
+}
+
+
+/* =====================================================
+   XP
+===================================================== */
+
+.xpArea{
+
+    margin-top:25px;
+
+}
+
+.xpTop{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#c9bfd9;
+
+    font-size:13px;
+
+    margin-bottom:8px;
+
+}
+
+.xpBar{
+
+    height:10px;
+
+    background:#211633;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+}
+
+#xpFill{
+
+    width:0%;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--purple),
+            var(--pink)
+        );
+
+    border-radius:30px;
+
+    transition:
+        width .5s ease;
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:10px;
+
+    padding:18px;
+
+}
+
+.stat{
+
+    padding:20px 12px;
+
+    text-align:center;
+
+    background:
+        rgba(139,92,246,.06);
+
+    border:
+        1px solid
+        rgba(139,92,246,.12);
+
+    border-radius:18px;
+
+}
+
+.statIcon{
+
+    font-size:25px;
+
+}
+
+.statValue{
+
+    display:block;
+
+    font-size:25px;
+
+    font-weight:bold;
+
+    margin:7px 0 2px;
+
+}
+
+.statLabel{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+/* =====================================================
+   SECTION TITLE
+===================================================== */
+
+.sectionTitle{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin:
+        30px
+        0
+        15px;
+
+}
+
+.sectionTitle h2{
+
+    font-size:21px;
+
+}
+
+.sectionTitle span{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+/* =====================================================
+   EXERCISES
+===================================================== */
+
+.exercises{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+}
+
+.exercise{
+
+    padding:24px;
+
+    border-radius:22px;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s,
+        border .2s,
+        background .2s;
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        linear-gradient(
+            145deg,
+            #160c27,
+            #0e0819
+        );
+
+}
+
+.exercise:hover{
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(168,85,247,.55);
+
+}
+
+.exercise.selected{
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(139,92,246,.25),
+            rgba(217,70,239,.08)
+        );
+
+    border-color:
+        var(--purple);
+
+    box-shadow:
+        0 15px 45px
+        rgba(139,92,246,.15);
+
+}
+
+.exerciseIcon{
+
+    font-size:45px;
+
+    margin-bottom:15px;
+
+}
+
+.exercise h3{
+
+    font-size:19px;
+
+    margin-bottom:7px;
+
+}
+
+.exercise p{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.6;
+
+}
+
+.exerciseBottom{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:18px;
+
+    font-size:12px;
+
+}
+
+.xpReward{
+
+    color:
+        var(--gold);
+
+}
+
+
+/* =====================================================
+   START BUTTON
+===================================================== */
+
+.startButton{
+
+    width:100%;
+
+    border:0;
+
+    padding:19px;
+
+    margin-top:20px;
+
+    border-radius:17px;
+
+    color:white;
+
+    font-size:19px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #c026d3
+        );
+
+    box-shadow:
+        0 12px 35px
+        rgba(139,92,246,.30);
+
+    transition:
+        transform .2s;
+
+}
+
+.startButton:hover{
+
+    transform:
+        translateY(-2px);
+
+}
+
+.startButton:active{
+
+    transform:
+        scale(.98);
+
+}
+
+
+/* =====================================================
+   RANKS
+===================================================== */
+
+.rankCard{
+
+    padding:22px;
+
+    margin-top:20px;
+
+}
+
+.rankHeader{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.rankIcon{
+
+    width:55px;
+    height:55px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #c026d3
+        );
+
+    font-size:27px;
+
+}
+
+.rankHeader small{
+
+    color:var(--muted);
+
+}
+
+.rankHeader h3{
+
+    margin-top:3px;
+
+}
+
+
+/* =====================================================
+   CAMERA GAME
+===================================================== */
 
 #game{
+
     display:none;
 
     position:fixed;
@@ -148,13 +751,13 @@ GAME
     background:#000;
 
     overflow:hidden;
+
+    z-index:100;
+
 }
 
-/* =========================================
-CAMERA
-========================================= */
-
 #video{
+
     position:absolute;
 
     inset:0;
@@ -164,19 +767,12 @@ CAMERA
 
     object-fit:cover;
 
-    /*
-    Mirror camera like selfie camera
-    */
     transform:scaleX(-1);
 
-    background:#000;
 }
 
-/* =========================================
-SKELETON
-========================================= */
-
 #canvas{
+
     position:absolute;
 
     inset:0;
@@ -184,16 +780,18 @@ SKELETON
     width:100%;
     height:100%;
 
+    transform:scaleX(-1);
+
     pointer-events:none;
 
-    transform:scaleX(-1);
 }
 
-/* =========================================
-TOP HUD
-========================================= */
 
-#hud{
+/* =====================================================
+   GAME HUD
+===================================================== */
+
+.gameHUD{
 
     position:absolute;
 
@@ -204,301 +802,129 @@ TOP HUD
     z-index:20;
 
     padding:
-
-    max(12px, env(safe-area-inset-top))
-
-    12px
-
-    12px;
-
-    padding-top:
-    max(
-        12px,
-        calc(env(safe-area-inset-top) + 8px)
-    );
+        max(10px,env(safe-area-inset-top))
+        10px
+        10px;
 
     display:grid;
 
     grid-template-columns:
-    1fr
-    1.5fr
-    1fr;
+        1fr
+        1.5fr
+        1fr;
 
-    gap:8px;
+    gap:7px;
 
-    pointer-events:none;
 }
 
-/* HUD BOX */
+.gameBox{
 
-.hudBox{
-
-    min-height:68px;
-
-    padding:8px 10px;
-
-    border-radius:16px;
-
-    background:
-    rgba(5,8,18,.78);
-
-    border:
-    1px solid
-    rgba(255,255,255,.16);
-
-    backdrop-filter:
-    blur(10px);
-
-    -webkit-backdrop-filter:
-    blur(10px);
+    padding:9px 7px;
 
     text-align:center;
 
-    box-shadow:
-    0 8px 30px
-    rgba(0,0,0,.35);
+    border-radius:15px;
+
+    background:
+        rgba(8,4,18,.78);
+
+    border:
+        1px solid
+        rgba(168,85,247,.25);
+
+    backdrop-filter:
+        blur(12px);
+
 }
 
-.hudTitle{
+.gameBox small{
 
     display:block;
 
-    font-size:12px;
+    color:#aaa0bb;
 
-    color:#aeb9d0;
+    font-size:10px;
 
-    margin-bottom:3px;
 }
 
-.hudValue{
+.gameValue{
 
     display:block;
 
-    font-size:25px;
+    font-size:22px;
 
     font-weight:bold;
+
+    margin-top:3px;
+
 }
 
-/* =========================================
-BOSS HP
-========================================= */
+.gameHP{
 
-.hpContainer{
+    height:8px;
 
     margin-top:5px;
 
-    width:100%;
+    border-radius:30px;
 
-    height:11px;
-
-    border-radius:20px;
+    background:#301421;
 
     overflow:hidden;
 
-    background:#38151d;
 }
 
-#hpBar{
+#bossHP{
 
     height:100%;
 
     width:100%;
 
     background:
-    linear-gradient(
-        90deg,
-        #ff153f,
-        #ff673d
-    );
+        linear-gradient(
+            90deg,
+            #ff315f,
+            #fb7185
+        );
 
     transition:
-    width .25s ease;
+        width .25s;
+
 }
 
-/* =========================================
-CENTER MESSAGE
-========================================= */
 
-#centerMessage{
+/* =====================================================
+   GAME CENTER
+===================================================== */
+
+#gameMessage{
 
     position:absolute;
 
     left:50%;
-    top:55%;
+    top:58%;
 
     transform:
-    translate(-50%,-50%);
+        translate(-50%,-50%);
 
-    z-index:15;
+    z-index:20;
 
-    text-align:center;
-
-    font-size:24px;
+    font-size:25px;
 
     font-weight:bold;
 
     text-shadow:
-    0 3px 15px #000;
+        0 4px 20px #000;
 
     pointer-events:none;
+
 }
 
-/* =========================================
-BOTTOM INFO
-========================================= */
 
-#bottomInfo{
+/* =====================================================
+   REST
+===================================================== */
 
-    position:absolute;
-
-    left:50%;
-
-    bottom:
-    max(18px, env(safe-area-inset-bottom));
-
-    transform:
-    translateX(-50%);
-
-    z-index:20;
-
-    padding:11px 20px;
-
-    border-radius:20px;
-
-    background:
-    rgba(5,8,18,.72);
-
-    border:
-    1px solid
-    rgba(255,255,255,.15);
-
-    backdrop-filter:
-    blur(10px);
-
-    font-size:15px;
-
-    white-space:nowrap;
-
-    pointer-events:none;
-}
-
-/* =========================================
-PAUSE BUTTON
-========================================= */
-
-#pauseButton{
-
-    position:absolute;
-
-    left:15px;
-
-    bottom:
-    max(18px, env(safe-area-inset-bottom));
-
-    z-index:30;
-
-    width:50px;
-    height:50px;
-
-    border-radius:50%;
-
-    border:1px solid
-    rgba(255,255,255,.2);
-
-    background:
-    rgba(5,8,18,.75);
-
-    color:white;
-
-    font-size:20px;
-
-    cursor:pointer;
-}
-
-/* =========================================
-REST SCREEN
-========================================= */
-
-#restScreen{
-
-    display:none;
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:100;
-
-    background:
-    radial-gradient(
-        circle at top,
-        #28345e,
-        #070a14 65%
-    );
-
-    align-items:center;
-
-    justify-content:center;
-
-    text-align:center;
-
-    padding:25px;
-}
-
-.restBox{
-
-    width:min(600px,100%);
-
-    padding:35px 25px;
-
-    border-radius:25px;
-
-    background:
-    rgba(15,21,39,.97);
-
-    border:
-    1px solid #293858;
-}
-
-.restIcon{
-    font-size:85px;
-}
-
-.restBox h1{
-    font-size:32px;
-}
-
-#timer{
-
-    font-size:90px;
-
-    font-weight:bold;
-
-    color:#65eaff;
-
-    margin:20px 0;
-}
-
-.restButton{
-
-    border:0;
-
-    padding:15px 25px;
-
-    border-radius:14px;
-
-    background:#293753;
-
-    color:white;
-
-    font-size:18px;
-}
-
-/* =========================================
-WIN
-========================================= */
-
-#winScreen{
+#rest{
 
     display:none;
 
@@ -508,152 +934,562 @@ WIN
 
     z-index:200;
 
+    align-items:center;
+
+    justify-content:center;
+
+    padding:25px;
+
     background:
-    radial-gradient(
-        circle at top,
-        #354c7a,
-        #070a14 65%
-    );
+        radial-gradient(
+            circle at top,
+            #28134a,
+            #07040f 65%
+        );
+
+    text-align:center;
+
+}
+
+.restCard{
+
+    width:min(600px,100%);
+
+    padding:40px 25px;
+
+}
+
+.restIcon{
+
+    font-size:80px;
+
+}
+
+#timer{
+
+    font-size:85px;
+
+    font-weight:bold;
+
+    color:
+        var(--purple3);
+
+    margin:20px 0;
+
+}
+
+
+/* =====================================================
+   WIN
+===================================================== */
+
+#win{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:300;
 
     align-items:center;
 
     justify-content:center;
 
+    padding:25px;
+
     text-align:center;
 
-    padding:25px;
+    background:
+        radial-gradient(
+            circle at top,
+            #32155a,
+            #07040f 70%
+        );
+
 }
 
-.winBox{
+.winCard{
 
-    padding:40px;
+    width:min(600px,100%);
 
-    border-radius:25px;
-
-    background:#101628;
+    padding:40px 25px;
 
 }
 
 .winIcon{
-    font-size:100px;
-}
 
-/* =========================================
-LANDSCAPE
-========================================= */
+    font-size:90px;
 
-@media(
-orientation:landscape
-){
-
-.hudBox{
-    min-height:58px;
-}
-
-.hudValue{
-    font-size:22px;
-}
-
-#bottomInfo{
-    bottom:12px;
-}
+    margin-bottom:10px;
 
 }
 
-/* =========================================
-SMALL PHONE
-========================================= */
 
-@media(max-width:380px){
+/* =====================================================
+   ERROR
+===================================================== */
 
-.hudBox{
-    min-height:60px;
-    padding:7px 5px;
+#error{
+
+    display:none;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    color:#ffb5c4;
+
+    background:#381521;
+
+    border:
+        1px solid
+        #8e304c;
+
+    line-height:1.7;
+
 }
 
-.hudValue{
-    font-size:21px;
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:800px){
+
+    .dashboard{
+
+        grid-template-columns:1fr;
+
+    }
+
 }
 
-.hudTitle{
-    font-size:10px;
-}
+@media(max-width:600px){
 
-#bottomInfo{
-    font-size:13px;
-}
+    .app{
+
+        width:92%;
+
+        padding-top:18px;
+
+    }
+
+    .header{
+
+        margin-bottom:20px;
+
+    }
+
+    .hero{
+
+        padding:25px 20px;
+
+    }
+
+    .exercises{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .exercise{
+
+        display:grid;
+
+        grid-template-columns:
+            60px 1fr;
+
+        gap:10px;
+
+    }
+
+    .exerciseIcon{
+
+        grid-row:
+            span 2;
+
+        margin:0;
+
+    }
+
+    .exerciseBottom{
+
+        grid-column:
+            2;
+
+        margin-top:0;
+
+    }
 
 }
 
 </style>
+
 </head>
 
 
 <body>
 
 
-<!-- =========================================
-START
-========================================= -->
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
 
-<div id="startScreen">
+<main
+id="dashboard"
+class="app">
 
-<div class="startBox">
 
-<div class="startMonster">
-👹
+<header class="header">
+
+<div class="logo">
+
+<div class="logoIcon">
+⚡
 </div>
 
-<h1>
-⚔️ تحدي البوس
-</h1>
+<div>
+
+<h1>FORGE</h1>
+
+<p>TRAIN • FIGHT • LEVEL UP</p>
+
+</div>
+
+</div>
+
+
+<div class="profile">
+
+<div class="levelBadge">
+
+LVL <span id="headerLevel">1</span>
+
+</div>
+
+</div>
+
+</header>
+
+
+
+<!-- HERO -->
+
+<div class="dashboard">
+
+
+<section class="card hero">
+
+<div class="heroSmall">
+YOUR FITNESS JOURNEY
+</div>
+
+<h2>
+اصنع مستواك.<br>
+اهزم البوس.
+</h2>
 
 <p>
-هل أنت مستعد لهزيمة الوحوش؟
+اختر التمرين، ابدأ التحدي، اجمع XP،
+وارفع رتبتك مع كل تمرين.
 </p>
 
 
-<div class="rules">
+<div class="xpArea">
 
-<div>❤️ البوس الأول: <b>20 HP</b></div>
+<div class="xpTop">
 
-<div>💥 كل Crunch صحيحة: <b>−1 HP</b></div>
+<span>
+⭐ XP
+</span>
 
-<div>👹 البوس الثاني: <b>30 HP</b></div>
-
-<div>🔥 كل بوس يزيد <b>10 HP</b></div>
-
-<div>⏱️ استراحة <b>دقيقتين</b> بعد كل بوس</div>
+<span id="xpText">
+0 / 100
+</span>
 
 </div>
+
+<div class="xpBar">
+
+<div id="xpFill"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- STATS -->
+
+<section class="card stats">
+
+<div class="stat">
+
+<div class="statIcon">
+🔥
+</div>
+
+<span
+class="statValue"
+id="totalReps">
+0
+</span>
+
+<span class="statLabel">
+إجمالي العدات
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statIcon">
+🏆
+</div>
+
+<span
+class="statValue"
+id="bosses">
+0
+</span>
+
+<span class="statLabel">
+Bosses
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statIcon">
+⚡
+</div>
+
+<span
+class="statValue"
+id="totalXP">
+0
+</span>
+
+<span class="statLabel">
+XP
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statIcon">
+💪
+</div>
+
+<span
+class="statValue"
+id="workouts">
+0
+</span>
+
+<span class="statLabel">
+تمارين
+</span>
+
+</div>
+
+</section>
+
+</div>
+
+
+
+<!-- EXERCISES -->
+
+<div class="sectionTitle">
+
+<h2>
+اختر تمرينك
+</h2>
+
+<span>
+3 تمارين متاحة
+</span>
+
+</div>
+
+
+<div class="exercises">
+
+
+<!-- CRUNCH -->
+
+<div
+class="exercise selected"
+data-exercise="crunch">
+
+<div class="exerciseIcon">
+🔥
+</div>
+
+<div>
+
+<h3>
+Crunch
+</h3>
+
+<p>
+قوي عضلات البطن
+واهزم البوس بعداتك.
+</p>
+
+</div>
+
+<div class="exerciseBottom">
+
+<span>
+❤️ Boss
+</span>
+
+<span class="xpReward">
++5 XP / عدة
+</span>
+
+</div>
+
+</div>
+
+
+<!-- PUSH UP -->
+
+<div
+class="exercise"
+data-exercise="pushup">
+
+<div class="exerciseIcon">
+💪
+</div>
+
+<div>
+
+<h3>
+Push Up
+</h3>
+
+<p>
+اختبر قوة صدرك وذراعيك
+ضد الوحش.
+</p>
+
+</div>
+
+<div class="exerciseBottom">
+
+<span>
+❤️ Boss
+</span>
+
+<span class="xpReward">
++5 XP / عدة
+</span>
+
+</div>
+
+</div>
+
+
+<!-- SQUAT -->
+
+<div
+class="exercise"
+data-exercise="squat">
+
+<div class="exerciseIcon">
+🦵
+</div>
+
+<div>
+
+<h3>
+Squat
+</h3>
+
+<p>
+قوة الأرجل والثبات.
+اهزم البوس بالقوة.
+</p>
+
+</div>
+
+<div class="exerciseBottom">
+
+<span>
+❤️ Boss
+</span>
+
+<span class="xpReward">
++5 XP / عدة
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- RANK -->
+
+<section class="card rankCard">
+
+<div class="rankHeader">
+
+<div class="rankIcon">
+⭐
+</div>
+
+<div>
+
+<small>
+رتبتك الحالية
+</small>
+
+<h3 id="rankName">
+مبتدئ
+</h3>
+
+</div>
+
+</div>
+
+</section>
+
 
 
 <button
 id="startButton"
 class="startButton">
 
-🚀 ابدأ التحدي
+⚔️ ابدأ التحدي
 
 </button>
 
 
-<div id="loading">
-⏳ جاري تشغيل الكاميرا وتتبع الجسم...
-</div>
+<div id="error"></div>
 
-
-<div id="error">
-</div>
-
-</div>
-
-</div>
+</main>
 
 
 
-<!-- =========================================
-GAME
-========================================= -->
+<!-- =====================================================
+     GAME
+===================================================== -->
 
 <div id="game">
 
@@ -671,137 +1507,88 @@ id="canvas">
 </canvas>
 
 
-<!-- =========================================
-HUD
-========================================= -->
-
-<div id="hud">
+<div class="gameHUD">
 
 
-<!-- REPS -->
+<div class="gameBox">
 
-<div class="hudBox">
-
-<span class="hudTitle">
+<small>
 🔥 العدات
-</span>
+</small>
 
 <span
-class="hudValue"
-id="repCounter">
-
+id="gameReps"
+class="gameValue">
 0
-
 </span>
 
 </div>
 
 
-<!-- BOSS -->
+<div class="gameBox">
 
-<div class="hudBox">
+<small id="gameBossName">
+👹 BOSS
+</small>
 
 <span
-class="hudTitle"
-id="bossName">
-
-👹 ملك الكرنش
-
+id="gameHPText"
+class="gameValue">
+❤️ 20
 </span>
+
+<div class="gameHP">
+
+<div id="bossHP"></div>
+
+</div>
+
+</div>
+
+
+<div class="gameBox">
+
+<small>
+⭐ XP
+</small>
 
 <span
-class="hudValue"
-id="hpText">
-
-❤️ 20 / 20
-
-</span>
-
-<div class="hpContainer">
-
-<div
-id="hpBar">
-</div>
-
-</div>
-
-</div>
-
-
-<!-- LEVEL -->
-
-<div class="hudBox">
-
-<span class="hudTitle">
-⚔️ البوس
-</span>
-
-<span
-class="hudValue">
-
-<span id="level">
-1
-</span>
-/ 10
-
+id="gameXP"
+class="gameValue">
+0
 </span>
 
 </div>
 
-
 </div>
 
 
-<!-- CENTER -->
-
-<div id="centerMessage">
-
+<div id="gameMessage">
 استعد...
-
 </div>
-
-
-<!-- BOTTOM -->
-
-<div id="bottomInfo">
-
-🦴 ضع جسمك كاملاً أمام الكاميرا
-
-</div>
-
-
-<!-- PAUSE -->
-
-<button
-id="pauseButton">
-
-⏸
-
-</button>
-
 
 </div>
 
 
 
-<!-- =========================================
-REST
-========================================= -->
+<!-- =====================================================
+     REST
+===================================================== -->
 
-<div id="restScreen">
+<div id="rest">
 
-<div class="restBox">
+<div class="card restCard">
 
 <div class="restIcon">
 🛡️
 </div>
 
 <h1>
-💥 هزمت البوس!
+Boss Defeated!
 </h1>
 
-<p>
-استرح قبل الجولة القادمة
+<p style="color:#9d91b5;margin-top:10px;">
+استراحة قبل المعركة القادمة
 </p>
 
 <div id="timer">
@@ -809,17 +1596,15 @@ REST
 </div>
 
 <p>
-
 البوس القادم:
 <b id="nextBoss">
 2
 </b>
-
 </p>
 
 <button
-id="skipButton"
-class="restButton">
+id="skipRest"
+class="startButton">
 
 ⏩ تخطي الاستراحة
 
@@ -831,27 +1616,29 @@ class="restButton">
 
 
 
-<!-- =========================================
-WIN
-========================================= -->
+<!-- =====================================================
+     WIN
+===================================================== -->
 
-<div id="winScreen">
+<div id="win">
 
-<div class="winBox">
+<div class="card winCard">
 
 <div class="winIcon">
 🏆
 </div>
 
 <h1>
-انتصرت!
+VICTORY
 </h1>
 
-<p id="winText">
+<p
+id="winText"
+style="color:#9d91b5;margin:15px 0;">
 </p>
 
 <button
-id="restartButton"
+id="restart"
 class="startButton">
 
 🔁 تحدي جديد
@@ -866,39 +1653,12 @@ class="startButton">
 
 <script>
 
-"use strict";
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-
-/* =========================================
-ELEMENTS
-========================================= */
-
-const video =
-document.getElementById("video");
-
-const canvas =
-document.getElementById("canvas");
-
-const ctx =
-canvas.getContext("2d");
-
-
-const startScreen =
-document.getElementById("startScreen");
-
-const game =
-document.getElementById("game");
-
-const restScreen =
-document.getElementById("restScreen");
-
-const winScreen =
-document.getElementById("winScreen");
-
-
-/* =========================================
-GAME VARIABLES
-========================================= */
+let selectedExercise =
+"crunch";
 
 let stream = null;
 
@@ -910,55 +1670,360 @@ let running = false;
 
 let paused = false;
 
-let level = 1;
-
-let hp = 20;
-
-let maxHP = 20;
-
-let reps = 0;
-
 let phase = "down";
 
 let lastRep = 0;
 
-let restInterval = null;
+let repsThisWorkout = 0;
+
+let bossHP = 20;
+
+let maxBossHP = 20;
+
+let bossLevel = 1;
+
+let restInterval;
 
 
-/* =========================================
-BOSSES
-========================================= */
+/* =====================================================
+   PLAYER DATA
+===================================================== */
 
-const bosses = [
+let player =
+JSON.parse(
+    localStorage.getItem("forgePlayer")
+) || {
 
-["👹","ملك الكرنش"],
+    xp:0,
 
-["👺","غول الحديد"],
+    level:1,
 
-["👿","وحش الصخر"],
+    reps:0,
 
-["😈","سيد الظلام"],
+    bosses:0,
 
-["🐲","التنين النهائي"],
+    workouts:0
 
-["👹","الوحش العملاق"],
+};
 
-["👺","ملك الجحيم"],
 
-["👿","المدمر"],
+/* =====================================================
+   RANKS
+===================================================== */
 
-["😈","سيد الوحوش"],
+const ranks = [
 
-["🐉","البوس النهائي"]
+{
+    min:1,
+    name:"مبتدئ",
+    icon:"🌱"
+},
+
+{
+    min:3,
+    name:"متدرب",
+    icon:"🥉"
+},
+
+{
+    min:5,
+    name:"مقاتل",
+    icon:"⚔️"
+},
+
+{
+    min:8,
+    name:"محارب",
+    icon:"🛡️"
+},
+
+{
+    min:12,
+    name:"محترف",
+    icon:"🔥"
+},
+
+{
+    min:17,
+    name:"نخبة",
+    icon:"💎"
+},
+
+{
+    min:23,
+    name:"أسطورة",
+    icon:"👑"
+},
+
+{
+    min:30,
+    name:"سيد البوس",
+    icon:"☠️"
+}
 
 ];
 
 
-/* =========================================
-ANGLE
-========================================= */
+/* =====================================================
+   XP REQUIRED
+===================================================== */
 
-function getAngle(a,b,c){
+function xpNeeded(){
+
+    return player.level * 100;
+
+}
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+function savePlayer(){
+
+    localStorage.setItem(
+        "forgePlayer",
+        JSON.stringify(player)
+    );
+
+}
+
+
+/* =====================================================
+   UPDATE DASHBOARD
+===================================================== */
+
+function updateDashboard(){
+
+    document.getElementById(
+        "headerLevel"
+    ).textContent =
+        player.level;
+
+
+    document.getElementById(
+        "totalReps"
+    ).textContent =
+        player.reps;
+
+
+    document.getElementById(
+        "bosses"
+    ).textContent =
+        player.bosses;
+
+
+    document.getElementById(
+        "totalXP"
+    ).textContent =
+        player.xp;
+
+
+    document.getElementById(
+        "workouts"
+    ).textContent =
+        player.workouts;
+
+
+    const needed =
+        xpNeeded();
+
+
+    document.getElementById(
+        "xpText"
+    ).textContent =
+        player.xp +
+        " / " +
+        needed;
+
+
+    document.getElementById(
+        "xpFill"
+    ).style.width =
+        Math.min(
+            100,
+            (player.xp / needed) * 100
+        ) +
+        "%";
+
+
+    let rank =
+        ranks[0];
+
+
+    for(
+        const r of ranks
+    ){
+
+        if(
+            player.level >= r.min
+        ){
+
+            rank = r;
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "rankName"
+    ).textContent =
+        rank.icon +
+        " " +
+        rank.name;
+
+}
+
+
+/* =====================================================
+   ADD XP
+===================================================== */
+
+function addXP(amount){
+
+    player.xp += amount;
+
+    /*
+    يمكن أن يرتفع اللاعب أكثر من Level
+    */
+
+    while(
+        player.xp >= xpNeeded()
+    ){
+
+        player.xp -= xpNeeded();
+
+        player.level++;
+
+        showLevelUp();
+
+    }
+
+
+    savePlayer();
+
+    updateDashboard();
+
+}
+
+
+/* =====================================================
+   LEVEL UP
+===================================================== */
+
+function showLevelUp(){
+
+    /*
+    إذا كان التمرين مفتوحاً
+    نظهر الرسالة في اللعبة.
+    */
+
+    if(running){
+
+        document.getElementById(
+            "gameMessage"
+        ).textContent =
+            "🎉 LEVEL UP!";
+
+        setTimeout(
+            ()=>{
+
+                if(running){
+
+                    document.getElementById(
+                        "gameMessage"
+                    ).textContent =
+                        "🔥 استمر!";
+
+                }
+
+            },
+            1800
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   EXERCISE SELECT
+===================================================== */
+
+document
+.querySelectorAll(".exercise")
+.forEach(
+    card => {
+
+        card.onclick =
+        function(){
+
+            document
+            .querySelectorAll(".exercise")
+            .forEach(
+                x =>
+                x.classList.remove(
+                    "selected"
+                )
+            );
+
+            this.classList.add(
+                "selected"
+            );
+
+            selectedExercise =
+                this.dataset.exercise;
+
+        };
+
+    }
+);
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const video =
+document.getElementById("video");
+
+const canvas =
+document.getElementById("canvas");
+
+const ctx =
+canvas.getContext("2d");
+
+
+/* =====================================================
+   BOSSES
+===================================================== */
+
+const bosses = {
+
+crunch:[
+    "👹",
+    "ملك البطن"
+],
+
+pushup:[
+    "👺",
+    "وحش القوة"
+],
+
+squat:[
+    "👿",
+    "مدمر الأرجل"
+]
+
+};
+
+
+/* =====================================================
+   BODY ANGLE
+===================================================== */
+
+function angle(a,b,c){
 
     const abx =
         a.x - b.x;
@@ -972,155 +2037,186 @@ function getAngle(a,b,c){
     const cby =
         c.y - b.y;
 
-
     const dot =
         abx * cbx +
         aby * cby;
 
-
-    const magnitude =
+    const mag =
         Math.hypot(abx,aby) *
         Math.hypot(cbx,cby);
 
-
-    if(!magnitude)
+    if(!mag)
         return 0;
 
-
     return Math.acos(
-
         Math.max(
             -1,
             Math.min(
                 1,
-                dot / magnitude
+                dot / mag
             )
         )
-
     ) * 180 / Math.PI;
 
 }
 
 
-/* =========================================
-GET AVERAGE ANGLE
-========================================= */
+/* =====================================================
+   EXERCISE DETECTION
+===================================================== */
 
-function getBodyAngle(lm){
-
-    let angles = [];
-
+function detectExercise(lm){
 
     /*
-    LEFT SIDE
-    shoulder 11
-    hip 23
-    knee 25
+    ============================================
+    CRUNCH
+    ============================================
     */
 
     if(
-        lm[11] &&
-        lm[23] &&
-        lm[25]
+        selectedExercise === "crunch"
     ){
 
-        angles.push(
-            getAngle(
+        const left =
+            angle(
                 lm[11],
                 lm[23],
                 lm[25]
-            )
-        );
+            );
 
-    }
-
-
-    /*
-    RIGHT SIDE
-    shoulder 12
-    hip 24
-    knee 26
-    */
-
-    if(
-        lm[12] &&
-        lm[24] &&
-        lm[26]
-    ){
-
-        angles.push(
-            getAngle(
+        const right =
+            angle(
                 lm[12],
                 lm[24],
                 lm[26]
-            )
-        );
+            );
 
-    }
-
-
-    if(!angles.length)
-        return null;
+        const avg =
+            (left + right) / 2;
 
 
-    return angles.reduce(
-        (a,b)=>a+b,
-        0
-    ) / angles.length;
-
-}
+        if(
+            avg < 82
+        )
+            return "up";
 
 
-/* =========================================
-CRUNCH DETECTION
-========================================= */
-
-function detectCrunch(lm){
-
-    const bodyAngle =
-        getBodyAngle(lm);
-
-
-    if(bodyAngle === null)
-        return null;
-
-
-    /*
-    زاوية كبيرة =
-    وضعية النزول
-    */
-
-    if(
-        bodyAngle > 105
-    ){
-
-        return "down";
+        if(
+            avg > 105
+        )
+            return "down";
 
     }
 
 
     /*
-    زاوية صغيرة =
-    وضعية الصعود
+    ============================================
+    SQUAT
+    ============================================
     */
 
     if(
-        bodyAngle < 82
+        selectedExercise === "squat"
     ){
 
-        return "up";
+        const left =
+            angle(
+                lm[23],
+                lm[25],
+                lm[27]
+            );
+
+        const right =
+            angle(
+                lm[24],
+                lm[26],
+                lm[28]
+            );
+
+        const avg =
+            (left + right) / 2;
+
+
+        /*
+        legs bent
+        */
+
+        if(
+            avg < 105
+        )
+            return "down";
+
+
+        /*
+        legs straight
+        */
+
+        if(
+            avg > 160
+        )
+            return "up";
 
     }
 
 
-    return phase;
+    /*
+    ============================================
+    PUSH UP
+    ============================================
+    */
+
+    if(
+        selectedExercise === "pushup"
+    ){
+
+        const leftArm =
+            angle(
+                lm[11],
+                lm[13],
+                lm[15]
+            );
+
+        const rightArm =
+            angle(
+                lm[12],
+                lm[14],
+                lm[16]
+            );
+
+        const avg =
+            (leftArm + rightArm) / 2;
+
+
+        /*
+        arms bent
+        */
+
+        if(
+            avg < 105
+        )
+            return "down";
+
+
+        /*
+        arms straight
+        */
+
+        if(
+            avg > 155
+        )
+            return "up";
+
+    }
+
+
+    return null;
 
 }
 
 
-/* =========================================
-DRAW SKELETON
-========================================= */
+/* =====================================================
+   DRAW SKELETON
+===================================================== */
 
 function drawSkeleton(lm){
 
@@ -1154,46 +2250,39 @@ function drawSkeleton(lm){
     ];
 
 
-    /*
-    BODY LINES
-    */
-
     ctx.lineWidth = 7;
 
-    ctx.lineCap = "round";
-
-    ctx.lineJoin = "round";
+    ctx.lineCap =
+        "round";
 
     ctx.strokeStyle =
-        "#55eaff";
+        "#c084fc";
 
 
     connections.forEach(
-        ([a,b])=>{
+        pair => {
 
-            const p1 = lm[a];
+            const a =
+                lm[pair[0]];
 
-            const p2 = lm[b];
+            const b =
+                lm[pair[1]];
 
 
-            if(!p1 || !p2)
+            if(!a || !b)
                 return;
 
 
-            /*
-            Ignore points with low visibility
-            */
-
             if(
-                p1.visibility !== undefined &&
-                p1.visibility < .35
+                a.visibility !== undefined &&
+                a.visibility < .35
             )
                 return;
 
 
             if(
-                p2.visibility !== undefined &&
-                p2.visibility < .35
+                b.visibility !== undefined &&
+                b.visibility < .35
             )
                 return;
 
@@ -1201,13 +2290,13 @@ function drawSkeleton(lm){
             ctx.beginPath();
 
             ctx.moveTo(
-                p1.x * canvas.width,
-                p1.y * canvas.height
+                a.x * canvas.width,
+                a.y * canvas.height
             );
 
             ctx.lineTo(
-                p2.x * canvas.width,
-                p2.y * canvas.height
+                b.x * canvas.width,
+                b.y * canvas.height
             );
 
             ctx.stroke();
@@ -1221,15 +2310,15 @@ function drawSkeleton(lm){
     */
 
     ctx.fillStyle =
-        "#ff3d64";
+        "#e879f9";
 
 
     lm.forEach(
-        p=>{
+        point => {
 
             if(
-                p.visibility !== undefined &&
-                p.visibility < .35
+                point.visibility !== undefined &&
+                point.visibility < .35
             )
                 return;
 
@@ -1238,9 +2327,11 @@ function drawSkeleton(lm){
 
             ctx.arc(
 
-                p.x * canvas.width,
+                point.x *
+                    canvas.width,
 
-                p.y * canvas.height,
+                point.y *
+                    canvas.height,
 
                 9,
 
@@ -1258,9 +2349,9 @@ function drawSkeleton(lm){
 }
 
 
-/* =========================================
-MEDIAPIPE RESULTS
-========================================= */
+/* =====================================================
+   MEDIA PIPE RESULTS
+===================================================== */
 
 function onResults(results){
 
@@ -1270,13 +2361,6 @@ function onResults(results){
     )
         return;
 
-
-    /*
-    IMPORTANT:
-    استخدمنا حجم الصورة الحقيقي
-    حتى يكون الـ skeleton مطابقاً
-    لمكان الجسم.
-    */
 
     canvas.width =
         video.videoWidth ||
@@ -1300,9 +2384,9 @@ function onResults(results){
     ){
 
         document.getElementById(
-            "centerMessage"
+            "gameMessage"
         ).textContent =
-            "👤 لم أجد جسمك";
+            "👤 أظهر جسمك بالكامل";
 
         return;
 
@@ -1313,19 +2397,11 @@ function onResults(results){
         results.poseLandmarks;
 
 
-    /*
-    DRAW
-    */
-
     drawSkeleton(lm);
 
 
-    /*
-    CRUNCH
-    */
-
     const movement =
-        detectCrunch(lm);
+        detectExercise(lm);
 
 
     if(
@@ -1333,12 +2409,14 @@ function onResults(results){
         phase === "down"
     ){
 
-        phase = "up";
+        phase =
+            "up";
+
 
         document.getElementById(
-            "centerMessage"
+            "gameMessage"
         ).textContent =
-            "⬆️ اصعد";
+            "⬆️ ممتاز";
 
     }
 
@@ -1348,28 +2426,25 @@ function onResults(results){
         phase === "up"
     ){
 
-        phase = "down";
+        phase =
+            "down";
 
-        hit();
+        registerRep();
 
     }
 
 }
 
 
-/* =========================================
-HIT BOSS
-========================================= */
+/* =====================================================
+   REGISTER REP
+===================================================== */
 
-function hit(){
+function registerRep(){
 
     const now =
         performance.now();
 
-
-    /*
-    منع العد المزدوج
-    */
 
     if(
         now - lastRep < 700
@@ -1381,46 +2456,68 @@ function hit(){
         now;
 
 
-    reps++;
+    repsThisWorkout++;
 
 
-    document.getElementById(
-        "repCounter"
-    ).textContent =
-        reps;
+    player.reps++;
 
 
-    hp =
+    /*
+    +5 XP
+    */
+
+    addXP(5);
+
+
+    /*
+    Boss damage
+    */
+
+    bossHP =
         Math.max(
             0,
-            hp - 1
+            bossHP - 1
         );
 
 
     document.getElementById(
-        "hpText"
+        "gameReps"
     ).textContent =
-        "❤️ " +
-        hp +
-        " / " +
-        maxHP;
+        repsThisWorkout;
 
 
     document.getElementById(
-        "hpBar"
+        "gameXP"
+    ).textContent =
+        player.xp;
+
+
+    document.getElementById(
+        "gameHPText"
+    ).textContent =
+        "❤️ " +
+        bossHP;
+
+
+    document.getElementById(
+        "bossHP"
     ).style.width =
-        (hp / maxHP * 100) +
+        (
+            bossHP /
+            maxBossHP *
+            100
+        ) +
         "%";
 
 
     document.getElementById(
-        "centerMessage"
+        "gameMessage"
     ).textContent =
-        "💥 ضربة!";
+        "💥 -1 HP";
 
 
     if(
-        hp <= 0
+        bossHP <= 0
     ){
 
         defeatBoss();
@@ -1430,59 +2527,9 @@ function hit(){
 }
 
 
-/* =========================================
-SET BOSS
-========================================= */
-
-function setBoss(){
-
-    maxHP =
-        20 +
-        ((level - 1) * 10);
-
-
-    hp =
-        maxHP;
-
-
-    const boss =
-        bosses[level - 1];
-
-
-    document.getElementById(
-        "bossName"
-    ).textContent =
-        boss[0] +
-        " " +
-        boss[1];
-
-
-    document.getElementById(
-        "level"
-    ).textContent =
-        level;
-
-
-    document.getElementById(
-        "hpText"
-    ).textContent =
-        "❤️ " +
-        hp +
-        " / " +
-        maxHP;
-
-
-    document.getElementById(
-        "hpBar"
-    ).style.width =
-        "100%";
-
-}
-
-
-/* =========================================
-START
-========================================= */
+/* =====================================================
+   START GAME
+===================================================== */
 
 async function startGame(){
 
@@ -1496,35 +2543,7 @@ async function startGame(){
         "none";
 
 
-    document.getElementById(
-        "loading"
-    ).style.display =
-        "block";
-
-
     try{
-
-
-        /*
-        HTTPS CHECK
-        */
-
-        if(
-            location.protocol !== "https:" &&
-            location.hostname !== "localhost" &&
-            location.hostname !== "127.0.0.1"
-        ){
-
-            throw new Error(
-                "الموقع يحتاج HTTPS حتى تعمل الكاميرا."
-            );
-
-        }
-
-
-        /*
-        CAMERA SUPPORT
-        */
 
         if(
             !navigator.mediaDevices ||
@@ -1532,18 +2551,19 @@ async function startGame(){
         ){
 
             throw new Error(
-                "هذا المتصفح لا يدعم الكاميرا."
+                "المتصفح لا يدعم الكاميرا."
             );
 
         }
 
 
         /*
-        REQUEST HIGH QUALITY CAMERA
+        CAMERA
         */
 
         stream =
-            await navigator.mediaDevices.getUserMedia({
+            await navigator.mediaDevices
+            .getUserMedia({
 
                 audio:false,
 
@@ -1552,18 +2572,15 @@ async function startGame(){
                     facingMode:"user",
 
                     width:{
-                        ideal:1920,
-                        min:1280
+                        ideal:1920
                     },
 
                     height:{
-                        ideal:1080,
-                        min:720
+                        ideal:1080
                     },
 
                     frameRate:{
-                        ideal:30,
-                        min:24
+                        ideal:30
                     }
 
                 }
@@ -1579,24 +2596,20 @@ async function startGame(){
 
 
         /*
-        MEDIA PIPE
+        MEDIAPIPE
         */
 
         if(
-            typeof Pose === "undefined"
+            typeof Pose ===
+            "undefined"
         ){
 
             throw new Error(
-                "لم يتم تحميل نظام تتبع الجسم. تحقق من الإنترنت وأعد تحميل الصفحة."
+                "لم يتم تحميل MediaPipe. تأكد من اتصال الإنترنت."
             );
 
         }
 
-
-        /*
-        MODEL COMPLEXITY 2
-        = دقة أعلى
-        */
 
         pose =
             new Pose({
@@ -1612,40 +2625,13 @@ async function startGame(){
 
         pose.setOptions({
 
-            /*
-            أعلى دقة للنموذج
-            */
-
             modelComplexity:2,
-
-
-            /*
-            تحسين الحركة
-            */
 
             smoothLandmarks:true,
 
-
-            /*
-            لا نحتاج segmentation
-            */
-
             enableSegmentation:false,
 
-
-            smoothSegmentation:true,
-
-
-            /*
-            دقة اكتشاف الجسم
-            */
-
             minDetectionConfidence:.65,
-
-
-            /*
-            دقة التتبع
-            */
 
             minTrackingConfidence:.65
 
@@ -1656,10 +2642,6 @@ async function startGame(){
             onResults
         );
 
-
-        /*
-        CAMERA PROCESSOR
-        */
 
         camera =
             new Camera(
@@ -1694,12 +2676,16 @@ async function startGame(){
 
 
         /*
-        RESET GAME
+        RESET
         */
 
-        level = 1;
+        bossLevel = 1;
 
-        reps = 0;
+        maxBossHP = 20;
+
+        bossHP = 20;
+
+        repsThisWorkout = 0;
 
         phase = "down";
 
@@ -1708,69 +2694,92 @@ async function startGame(){
         running = true;
 
 
+        /*
+        UPDATE BOSS
+        */
+
+        const boss =
+            bosses[selectedExercise];
+
+
         document.getElementById(
-            "repCounter"
+            "gameBossName"
+        ).textContent =
+            boss[0] +
+            " " +
+            boss[1];
+
+
+        document.getElementById(
+            "gameReps"
         ).textContent =
             "0";
 
 
-        setBoss();
-
-
-        /*
-        FULLSCREEN GAME
-        */
-
-        startScreen.style.display =
-            "none";
-
-
-        game.style.display =
-            "block";
+        document.getElementById(
+            "gameHPText"
+        ).textContent =
+            "❤️ 20";
 
 
         document.getElementById(
-            "centerMessage"
+            "bossHP"
+        ).style.width =
+            "100%";
+
+
+        document.getElementById(
+            "gameMessage"
         ).textContent =
             "استعد...";
 
 
+        document.getElementById(
+            "gameXP"
+        ).textContent =
+            player.xp;
+
+
         /*
-        FULLSCREEN ON PHONE
+        SHOW GAME
+        */
+
+        document.getElementById(
+            "dashboard"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "game"
+        ).style.display =
+            "block";
+
+
+        /*
+        FULLSCREEN
         */
 
         try{
 
             if(
-                document.documentElement.requestFullscreen
+                document.documentElement
+                .requestFullscreen
             ){
 
-                await document.documentElement
+                await document
+                    .documentElement
                     .requestFullscreen();
 
             }
 
-        }catch(e){
-
-            /*
-            iPhone Safari لا يدعم fullscreen
-            بشكل كامل، لذلك لا نوقف اللعبة.
-            */
-
-        }
+        }catch(e){}
 
 
         camera.start();
 
 
-        document.getElementById(
-            "loading"
-        ).style.display =
-            "none";
-
-
     }
-
     catch(err){
 
         console.error(err);
@@ -1784,25 +2793,17 @@ async function startGame(){
             "❌ " +
             (
                 err.message ||
-                "حدث خطأ أثناء تشغيل الكاميرا."
+                "حدث خطأ."
             );
-
-
-        document.getElementById(
-            "loading"
-        ).style.display =
-            "none";
 
 
         if(stream){
 
             stream
-                .getTracks()
-                .forEach(
-                    t=>t.stop()
-                );
-
-            stream = null;
+            .getTracks()
+            .forEach(
+                t => t.stop()
+            );
 
         }
 
@@ -1811,9 +2812,9 @@ async function startGame(){
 }
 
 
-/* =========================================
-DEFEAT
-========================================= */
+/* =====================================================
+   DEFEAT BOSS
+===================================================== */
 
 function defeatBoss(){
 
@@ -1830,13 +2831,38 @@ function defeatBoss(){
     }
 
 
+    /*
+    BONUS XP
+    */
+
+    addXP(50);
+
+
+    player.bosses++;
+
+
+    player.workouts++;
+
+
+    savePlayer();
+
+
+    updateDashboard();
+
+
+    /*
+    REST
+    */
+
     document.getElementById(
         "nextBoss"
     ).textContent =
-        level + 1;
+        bossLevel + 1;
 
 
-    restScreen.style.display =
+    document.getElementById(
+        "rest"
+    ).style.display =
         "flex";
 
 
@@ -1862,7 +2888,7 @@ function defeatBoss(){
                 seconds--;
 
 
-                const minutes =
+                const min =
                     String(
                         Math.floor(
                             seconds / 60
@@ -1873,7 +2899,7 @@ function defeatBoss(){
                     );
 
 
-                const secs =
+                const sec =
                     String(
                         seconds % 60
                     ).padStart(
@@ -1885,9 +2911,9 @@ function defeatBoss(){
                 document.getElementById(
                     "timer"
                 ).textContent =
-                    minutes +
+                    min +
                     ":" +
-                    secs;
+                    sec;
 
 
                 if(
@@ -1912,9 +2938,9 @@ function defeatBoss(){
 }
 
 
-/* =========================================
-NEXT BOSS
-========================================= */
+/* =====================================================
+   NEXT BOSS
+===================================================== */
 
 function nextBoss(){
 
@@ -1923,150 +2949,90 @@ function nextBoss(){
     );
 
 
-    restScreen.style.display =
+    document.getElementById(
+        "rest"
+    ).style.display =
         "none";
 
 
     /*
-    10 BOSSES
+    Boss 2 = 30 HP
+    Boss 3 = 40 HP
+    etc.
     */
 
-    if(
-        level >= 10
-    ){
-
-        finish();
-
-        return;
-
-    }
+    bossLevel++;
 
 
-    level++;
+    maxBossHP =
+        20 +
+        (
+            (bossLevel - 1)
+            * 10
+        );
+
+
+    bossHP =
+        maxBossHP;
+
+
+    repsThisWorkout = 0;
 
 
     phase =
         "down";
 
 
-    paused =
-        false;
+    running = true;
 
 
-    running =
-        true;
-
-
-    setBoss();
-
-
-    game.style.display =
+    document.getElementById(
+        "game"
+    ).style.display =
         "block";
 
 
     document.getElementById(
-        "centerMessage"
+        "gameReps"
     ).textContent =
-        "استعد...";
-
-
-    if(camera){
-
-        camera.start();
-
-    }
-
-}
-
-
-/* =========================================
-FINISH
-========================================= */
-
-function finish(){
-
-    running =
-        false;
-
-
-    if(camera){
-
-        try{
-            camera.stop();
-        }
-        catch(e){}
-
-    }
-
-
-    if(stream){
-
-        stream
-            .getTracks()
-            .forEach(
-                t=>t.stop()
-            );
-
-        stream = null;
-
-    }
-
-
-    game.style.display =
-        "none";
-
-
-    winScreen.style.display =
-        "flex";
+        "0";
 
 
     document.getElementById(
-        "winText"
+        "gameHPText"
     ).textContent =
-        "أكملت 10 بوسات وحققت " +
-        reps +
-        " عدة! 💪";
-
-}
+        "❤️ " +
+        bossHP;
 
 
-/* =========================================
-PAUSE
-========================================= */
-
-document.getElementById(
-    "pauseButton"
-).onclick =
-function(){
-
-    paused =
-        !paused;
+    document.getElementById(
+        "bossHP"
+    ).style.width =
+        "100%";
 
 
-    this.textContent =
-        paused
-        ? "▶️"
-        : "⏸";
+    document.getElementById(
+        "gameMessage"
+    ).textContent =
+        "🔥 BOSS " +
+        bossLevel;
 
 
-    if(
-        !paused &&
-        camera
-    ){
+    if(camera){
 
         camera.start();
 
     }
 
-};
+}
 
 
-/* =========================================
-SKIP REST
-========================================= */
+/* =====================================================
+   REST SKIP
+===================================================== */
 
 document.getElementById(
-    "skipButton"
+    "skipRest"
 ).onclick =
 function(){
 
@@ -2075,9 +3041,35 @@ function(){
 };
 
 
-/* =========================================
-START BUTTON
-========================================= */
+/* =====================================================
+   RESTART
+===================================================== */
+
+document.getElementById(
+    "restart"
+).onclick =
+function(){
+
+    document.getElementById(
+        "win"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "dashboard"
+    ).style.display =
+        "block";
+
+
+    updateDashboard();
+
+};
+
+
+/* =====================================================
+   START BUTTON
+===================================================== */
 
 document.getElementById(
     "startButton"
@@ -2089,39 +3081,28 @@ function(){
 };
 
 
-/* =========================================
-RESTART
-========================================= */
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
-document.getElementById(
-    "restartButton"
-).onclick =
-function(){
-
-    winScreen.style.display =
-        "none";
-
-    startScreen.style.display =
-        "block";
-
-};
+updateDashboard();
 
 
-/* =========================================
-CLEANUP
-========================================= */
+/* =====================================================
+   CLEANUP
+===================================================== */
 
 window.addEventListener(
     "beforeunload",
-    function(){
+    ()=>{
 
         if(stream){
 
             stream
-                .getTracks()
-                .forEach(
-                    t=>t.stop()
-                );
+            .getTracks()
+            .forEach(
+                t => t.stop()
+            );
 
         }
 

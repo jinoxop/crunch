@@ -2,11 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
 <title>⚔️ تحدي البوس</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
 
 body{
     margin:0;
@@ -29,6 +32,8 @@ button{
     padding:20px 0 40px;
 }
 
+/* HEADER */
+
 header{
     display:flex;
     align-items:center;
@@ -46,16 +51,11 @@ header p{
     color:#aeb8d0;
 }
 
-.card{
-    background:rgba(16,22,40,.96);
-    border:1px solid #293552;
-    border-radius:22px;
-    box-shadow:0 15px 50px rgba(0,0,0,.35);
-}
+/* BUTTONS */
 
 .primary{
     background:linear-gradient(135deg,#ff3154,#ff713f);
-    color:white;
+    color:#fff;
     padding:14px 25px;
     border-radius:14px;
     font-size:17px;
@@ -81,6 +81,8 @@ header p{
     font-size:20px;
 }
 
+/* SCREENS */
+
 .screen{
     display:none;
 }
@@ -88,6 +90,17 @@ header p{
 .screen.active{
     display:block;
 }
+
+/* CARD */
+
+.card{
+    background:rgba(16,22,40,.97);
+    border:1px solid #293552;
+    border-radius:22px;
+    box-shadow:0 15px 50px rgba(0,0,0,.35);
+}
+
+/* START */
 
 .intro{
     max-width:650px;
@@ -100,15 +113,50 @@ header p{
     font-size:90px;
 }
 
+.intro h2{
+    font-size:34px;
+}
+
+.intro p{
+    line-height:1.8;
+}
+
 .intro li{
     text-align:right;
-    margin:12px 0;
+    margin:14px 0;
+    font-size:18px;
 }
 
 .note{
     color:#78839e;
     font-size:13px;
 }
+
+.loading{
+    display:none;
+    margin-top:18px;
+    color:#65eaff;
+}
+
+.error{
+    display:none;
+    margin-top:18px;
+    padding:16px;
+    border-radius:14px;
+    background:#441d28;
+    border:1px solid #8b3144;
+    color:#ffb5c0;
+    font-size:15px;
+    line-height:1.7;
+}
+
+.status{
+    margin-top:12px;
+    color:#9da8bf;
+    min-height:22px;
+}
+
+/* TOP BAR */
 
 .topbar{
     display:flex;
@@ -131,11 +179,15 @@ header p{
     font-size:25px;
 }
 
+/* GAME */
+
 .game{
     display:grid;
     grid-template-columns:2fr 1fr;
     gap:15px;
 }
+
+/* CAMERA */
 
 .camera-card{
     padding:14px;
@@ -150,7 +202,8 @@ header p{
     border-radius:17px;
 }
 
-#video,#canvas{
+#video,
+#canvas{
     position:absolute;
     width:100%;
     height:100%;
@@ -158,10 +211,7 @@ header p{
     object-fit:cover;
 }
 
-#video{
-    transform:scaleX(-1);
-}
-
+#video,
 #canvas{
     transform:scaleX(-1);
 }
@@ -180,6 +230,8 @@ header p{
     padding:15px 5px 5px;
     color:#d9e0ef;
 }
+
+/* BOSS */
 
 .boss{
     padding:25px;
@@ -225,6 +277,8 @@ header p{
     gap:10px;
 }
 
+/* REST */
+
 .rest{
     max-width:650px;
     margin:70px auto;
@@ -243,22 +297,7 @@ header p{
     margin:15px 0;
 }
 
-.error{
-    display:none;
-    margin:15px 0;
-    padding:15px;
-    background:#441d28;
-    border:1px solid #8b3144;
-    color:#ffb5c0;
-    border-radius:12px;
-    text-align:center;
-}
-
-.loading{
-    display:none;
-    color:#64eaff;
-    margin-top:15px;
-}
+/* MOBILE */
 
 @media(max-width:800px){
 
@@ -289,60 +328,143 @@ header p{
     }
 }
 </style>
+
+
+<!--
+====================================================
+MediaPipe القديم بدون ES Module
+هذا هو التغيير المهم لحل مشكلة:
+"Importing a module script failed"
+====================================================
+-->
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js"></script>
+
 </head>
+
 
 <body>
 
 <div class="app">
 
+
 <header>
 
 <div>
-<h1>⚔️ تحدي البوس</h1>
-<p>اهزم الوحوش بعدّات الـ Crunch</p>
+
+<h1>
+⚔️ تحدي البوس
+</h1>
+
+<p>
+اهزم الوحوش بعدّات الـ Crunch
+</p>
+
 </div>
 
-<button id="headerStart" class="primary">
+
+<button
+id="headerStart"
+class="primary">
+
 🎮 ابدأ التحدي
+
 </button>
 
 </header>
 
 
-<!-- START -->
 
-<section id="start" class="screen active">
+<!-- =========================================
+START SCREEN
+========================================= -->
+
+<section
+id="start"
+class="screen active">
 
 <div class="card intro">
 
-<div class="monster">👹</div>
+<div class="monster">
+👹
+</div>
 
-<h2>جاهز؟</h2>
+
+<h2>
+جاهز؟
+</h2>
+
 
 <p>
 اضغط على ابدأ للسماح للكاميرا بتتبع جسمك.
 </p>
 
+
 <ul>
-<li>❤️ البوس الأول: 20 HP</li>
-<li>💥 كل Crunch صحيحة = −1 HP</li>
-<li>👹 البوس الثاني: 30 HP</li>
-<li>🔥 كل مرحلة تزيد 10 HP</li>
-<li>⏱️ استراحة دقيقتين بعد كل بوس</li>
+
+<li>
+❤️ البوس الأول: 20 HP
+</li>
+
+<li>
+💥 كل Crunch صحيحة = −1 HP
+</li>
+
+<li>
+👹 البوس الثاني: 30 HP
+</li>
+
+<li>
+🔥 كل مرحلة تزيد 10 HP
+</li>
+
+<li>
+⏱️ استراحة دقيقتين بعد كل بوس
+</li>
+
 </ul>
 
-<button id="start" class="primary big">
+
+<button
+id="start"
+class="primary big">
+
 🚀 ابدأ الآن
+
 </button>
 
-<div id="loading" class="loading">
-⏳ جاري تشغيل الكاميرا وتتبع الجسم...
+
+<div
+id="loading"
+class="loading">
+
+⏳ جاري تشغيل الكاميرا...
+
 </div>
 
-<div id="error" class="error"></div>
+
+<div
+id="error"
+class="error">
+</div>
+
+
+<div
+id="status"
+class="status">
+
+جاهز
+
+</div>
+
 
 <p class="note">
-يجب السماح للمتصفح باستخدام الكاميرا.
+
+إذا طلب Safari إذن الكاميرا اختر
+Allow / سماح.
+
 </p>
 
 </div>
@@ -350,258 +472,413 @@ header p{
 </section>
 
 
-<!-- GAME -->
 
-<section id="game" class="screen">
+<!-- =========================================
+GAME SCREEN
+========================================= -->
+
+<section
+id="game"
+class="screen">
+
 
 <div class="card topbar">
 
-<div>
-<span>البوس</span>
-<strong id="level">1</strong>
-</div>
 
 <div>
-<span>العدات</span>
-<strong id="reps">0</strong>
+
+<span>
+البوس
+</span>
+
+<strong id="level">
+1
+</strong>
+
 </div>
+
 
 <div>
-<span>الحالة</span>
-<strong id="state">استعد</strong>
-</div>
+
+<span>
+العدات
+</span>
+
+<strong id="reps">
+0
+</strong>
 
 </div>
+
+
+<div>
+
+<span>
+الحالة
+</span>
+
+<strong id="state">
+استعد
+</strong>
+
+</div>
+
+
+</div>
+
 
 
 <div class="game">
 
+
+<!-- CAMERA -->
+
 <div class="card camera-card">
+
 
 <div class="camera">
 
-<video id="video" autoplay muted playsinline></video>
 
-<canvas id="canvas"></canvas>
+<video
+id="video"
+autoplay
+muted
+playsinline>
+</video>
+
+
+<canvas
+id="canvas">
+</canvas>
+
 
 <div id="cameraMessage">
+
 📷 الكاميرا
-</div>
 
 </div>
 
-<div class="instruction" id="instruction">
-استلقِ أمام الكاميرا وابدأ الـ Crunch
-</div>
 
 </div>
 
+
+<div
+class="instruction"
+id="instruction">
+
+انزل لوضع البداية ثم اصعد بالـ Crunch.
+
+</div>
+
+
+</div>
+
+
+
+<!-- BOSS -->
 
 <div class="card boss">
 
-<div class="bossEmoji" id="bossEmoji">
+
+<div
+class="bossEmoji"
+id="bossEmoji">
+
 👹
+
 </div>
 
-<h2 id="bossName">
+
+<h2
+id="bossName">
+
 ملك الكرنش
+
 </h2>
+
 
 <div class="hpInfo">
 
-<span>❤️ HP</span>
+<span>
+❤️ HP
+</span>
 
 <span id="hpText">
+
 20 / 20
+
 </span>
 
 </div>
 
+
 <div class="hpBar">
 
-<div id="hp"></div>
+<div
+id="hp">
+</div>
 
 </div>
+
 
 <div class="damage">
-كل عدة صحيحة = <b>−1 HP</b>
+
+كل عدة صحيحة =
+<b>−1 HP</b>
+
 </div>
+
 
 <div class="controls">
 
-<button id="pause" class="secondary">
+
+<button
+id="pause"
+class="secondary">
+
 ⏸ إيقاف
+
 </button>
 
-<button id="stop" class="danger">
+
+<button
+id="stop"
+class="danger">
+
 ✕ إنهاء
+
 </button>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </div>
 
 </section>
 
 
-<!-- REST -->
 
-<section id="rest" class="screen">
+<!-- =========================================
+REST
+========================================= -->
+
+<section
+id="rest"
+class="screen">
+
 
 <div class="card rest">
 
-<div class="restIcon">🛡️</div>
 
-<h2>💥 هزمت البوس!</h2>
+<div class="restIcon">
+🛡️
+</div>
 
-<p>استرح قبل الجولة القادمة</p>
+
+<h2>
+💥 هزمت البوس!
+</h2>
+
+
+<p>
+استرح قبل الجولة القادمة.
+</p>
+
 
 <div id="timer">
 02:00
 </div>
 
+
 <p>
+
 البوس القادم:
-<b id="next">2</b>
+<b id="next">
+2
+</b>
+
 </p>
 
-<button id="skip" class="secondary">
+
+<button
+id="skip"
+class="secondary">
+
 ⏩ تخطي
+
 </button>
+
 
 </div>
 
 </section>
 
 
-<!-- WIN -->
 
-<section id="win" class="screen">
+<!-- =========================================
+WIN
+========================================= -->
+
+<section
+id="win"
+class="screen">
+
 
 <div class="card intro">
 
-<div class="monster">🏆</div>
 
-<h2>انتــصرت!</h2>
+<div class="monster">
+🏆
+</div>
 
-<p id="result"></p>
 
-<button id="again" class="primary big">
+<h2>
+انتصرت!
+</h2>
+
+
+<p id="result">
+</p>
+
+
+<button
+id="again"
+class="primary big">
+
 🔁 تحدي جديد
+
 </button>
+
 
 </div>
 
 </section>
 
+
 </div>
 
 
-<script type="module">
 
-/*
-====================================
- تحميل MediaPipe
-====================================
-*/
+<script>
 
-const MEDIAPIPE_URL =
-"https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/+esm";
-
-let PoseLandmarker;
-let FilesetResolver;
-let DrawingUtils;
+"use strict";
 
 
-/*
-====================================
- العناصر
-====================================
-*/
+/* =========================================
+ELEMENTS
+========================================= */
 
 const $ = id =>
 document.getElementById(id);
 
 
-const startScreen = $("start");
-const gameScreen = $("game");
-const restScreen = $("rest");
-const winScreen = $("win");
+const startScreen =
+$("start");
+
+const gameScreen =
+$("game");
+
+const restScreen =
+$("rest");
+
+const winScreen =
+$("win");
 
 
-let cameraStream = null;
+/* =========================================
+VARIABLES
+========================================= */
+
+let stream = null;
+
 let pose = null;
-let draw = null;
 
-let playing = false;
+let camera = null;
+
+let running = false;
+
 let paused = false;
 
 let level = 1;
+
 let hp = 20;
+
 let maxHP = 20;
 
 let reps = 0;
 
 let phase = "down";
 
-let lastVideoTime = -1;
-let animation = null;
+let lastRep = 0;
 
 let restInterval = null;
 
-let lastRep = 0;
 
-
-/*
-====================================
- البوسات
-====================================
-*/
+/* =========================================
+BOSSES
+========================================= */
 
 const bosses = [
 
-["ملك الكرنش","👹"],
+[
+"ملك الكرنش",
+"👹"
+],
 
-["غول الحديد","👺"],
+[
+"غول الحديد",
+"👺"
+],
 
-["وحش الصخر","👿"],
+[
+"وحش الصخر",
+"👿"
+],
 
-["سيد الظلام","😈"],
+[
+"سيد الظلام",
+"😈"
+],
 
-["التنين النهائي","🐲"]
+[
+"التنين النهائي",
+"🐲"
+]
 
 ];
 
 
-/*
-====================================
- عرض شاشة
-====================================
-*/
+/* =========================================
+SHOW SCREEN
+========================================= */
 
-function screen(element){
+function show(screen){
 
 startScreen.classList.remove("active");
+
 gameScreen.classList.remove("active");
+
 restScreen.classList.remove("active");
+
 winScreen.classList.remove("active");
 
-element.classList.add("active");
+screen.classList.add("active");
 
 }
 
 
-/*
-====================================
- رسالة الخطأ
-====================================
-*/
+/* =========================================
+ERROR
+========================================= */
 
 function showError(message){
 
-$("error").style.display = "block";
+$("error").style.display =
+"block";
 
 $("error").textContent =
 "❌ " + message;
@@ -609,155 +886,84 @@ $("error").textContent =
 }
 
 
-/*
-====================================
- تشغيل الكاميرا
-====================================
-*/
+/* =========================================
+BOSS
+========================================= */
 
-async function camera(){
+function setBoss(){
 
-if(!navigator.mediaDevices){
+maxHP =
+20 + ((level - 1) * 10);
 
-throw new Error(
-"المتصفح لا يدعم الكاميرا."
-);
-
-}
+hp =
+maxHP;
 
 
-cameraStream =
-await navigator.mediaDevices.getUserMedia({
-
-video:{
-facingMode:"user",
-width:{ideal:1280},
-height:{ideal:720}
-},
-
-audio:false
-
-});
+$("level").textContent =
+level;
 
 
-$("video").srcObject =
-cameraStream;
+$("hpText").textContent =
+hp + " / " + maxHP;
 
 
-await $("video").play();
+$("hp").style.width =
+"100%";
 
 
-$("cameraMessage").style.display =
-"none";
-
-}
-
-
-/*
-====================================
- تحميل MediaPipe
-====================================
-*/
-
-async function loadPose(){
-
-$("loading").textContent =
-"⏳ جاري تحميل نظام تتبع الجسم...";
+const boss =
+bosses[
+Math.min(
+level - 1,
+bosses.length - 1
+)
+];
 
 
-const module =
-await import(MEDIAPIPE_URL);
+$("bossName").textContent =
+boss[0];
 
 
-PoseLandmarker =
-module.PoseLandmarker;
-
-FilesetResolver =
-module.FilesetResolver;
-
-DrawingUtils =
-module.DrawingUtils;
-
-
-const vision =
-await FilesetResolver.forVisionTasks(
-
-"https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm"
-
-);
-
-
-pose =
-await PoseLandmarker.createFromOptions(
-
-vision,
-
-{
-
-baseOptions:{
-
-modelAssetPath:
-
-"https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task",
-
-delegate:"GPU"
-
-},
-
-runningMode:"VIDEO",
-
-numPoses:1,
-
-minPoseDetectionConfidence:.5,
-
-minPosePresenceConfidence:.5,
-
-minTrackingConfidence:.5
-
-}
-
-);
-
-
-draw =
-new DrawingUtils(
-$("canvas").getContext("2d")
-);
+$("bossEmoji").textContent =
+boss[1];
 
 }
 
 
-/*
-====================================
- زاوية
-====================================
-*/
+/* =========================================
+ANGLE
+========================================= */
 
 function angle(a,b,c){
 
-const ab = {
+const abx =
+a.x - b.x;
 
-x:a.x-b.x,
-y:a.y-b.y
+const aby =
+a.y - b.y;
 
-};
+const cbx =
+c.x - b.x;
 
-const cb = {
-
-x:c.x-b.x,
-y:c.y-b.y
-
-};
+const cby =
+c.y - b.y;
 
 
 const dot =
-ab.x*cb.x +
-ab.y*cb.y;
+abx * cbx +
+aby * cby;
 
 
 const mag =
-Math.hypot(ab.x,ab.y) *
-Math.hypot(cb.x,cb.y);
+Math.hypot(
+abx,
+aby
+)
+*
+Math.hypot(
+cbx,
+cby
+);
 
 
 if(!mag)
@@ -768,26 +974,31 @@ return Math.acos(
 
 Math.max(
 -1,
-Math.min(1,dot/mag)
+Math.min(
+1,
+dot / mag
+)
 )
 
-)*180/Math.PI;
+)
+*
+180
+/
+Math.PI;
 
 }
 
 
-/*
-====================================
- اكتشاف Crunch
-====================================
-*/
+/* =========================================
+CRUNCH DETECTION
+========================================= */
 
-function crunch(landmarks){
+function detectCrunch(landmarks){
 
 /*
-11 = كتف
-23 = ورك
-25 = ركبة
+11 = shoulder
+23 = hip
+25 = knee
 */
 
 const shoulder =
@@ -800,16 +1011,18 @@ const knee =
 landmarks[25];
 
 
-if(!shoulder ||
+if(
+!shoulder ||
 !hip ||
-!knee){
+!knee
+){
 
 return null;
 
 }
 
 
-const a =
+const bodyAngle =
 angle(
 shoulder,
 hip,
@@ -825,11 +1038,11 @@ hip.y
 
 
 /*
- وضعية النزول
+DOWN
 */
 
 if(
-a > 105 &&
+bodyAngle > 105 &&
 vertical > .18
 ){
 
@@ -839,11 +1052,11 @@ return "down";
 
 
 /*
- وضعية الصعود
+UP
 */
 
 if(
-a < 82 ||
+bodyAngle < 82 ||
 vertical < .14
 ){
 
@@ -857,11 +1070,9 @@ return phase;
 }
 
 
-/*
-====================================
- ضرب البوس
-====================================
-*/
+/* =========================================
+HIT
+========================================= */
 
 function hit(){
 
@@ -870,7 +1081,7 @@ performance.now();
 
 
 if(
-now-lastRep < 650
+now - lastRep < 650
 ){
 
 return;
@@ -878,7 +1089,8 @@ return;
 }
 
 
-lastRep = now;
+lastRep =
+now;
 
 
 reps++;
@@ -891,43 +1103,46 @@ reps;
 hp =
 Math.max(
 0,
-hp-1
+hp - 1
 );
 
 
 $("hpText").textContent =
-`${hp} / ${maxHP}`;
+hp + " / " + maxHP;
 
 
 $("hp").style.width =
-`${(hp/maxHP)*100}%`;
+(
+hp / maxHP * 100
+)
++
+"%";
 
 
 $("state").textContent =
 "💥 ضربة!";
 
 
-if(hp <= 0){
+if(
+hp <= 0
+){
 
-defeat();
+defeatBoss();
 
 }
 
 }
 
 
-/*
-====================================
- تشغيل الفريمات
-====================================
-*/
+/* =========================================
+MEDIAPIPE RESULTS
+========================================= */
 
-function loop(){
+function onResults(results){
 
 if(
-!playing ||
-paused ||
-!pose
+!running ||
+paused
 ){
 
 return;
@@ -935,11 +1150,16 @@ return;
 }
 
 
+const canvas =
+$("canvas");
+
+
 const video =
 $("video");
 
-const canvas =
-$("canvas");
+
+const ctx =
+canvas.getContext("2d");
 
 
 canvas.width =
@@ -952,15 +1172,6 @@ video.videoHeight ||
 720;
 
 
-if(
-video.currentTime !==
-lastVideoTime
-){
-
-const ctx =
-canvas.getContext("2d");
-
-
 ctx.clearRect(
 0,
 0,
@@ -969,44 +1180,135 @@ canvas.height
 );
 
 
-const result =
-pose.detectForVideo(
-video,
-performance.now()
-);
-
-
-if(
-result.landmarks &&
-result.landmarks.length
-){
-
-const landmarks =
-result.landmarks[0];
-
-
 /*
- رسم الهيكل
+NO BODY
 */
 
-draw.drawLandmarks(
-landmarks,
-{radius:4}
+if(
+!results.poseLandmarks
+){
+
+$("state").textContent =
+"👤 لم أجد الجسم";
+
+return;
+
+}
+
+
+const lm =
+results.poseLandmarks;
+
+
+/*
+CONNECTIONS
+*/
+
+const connections = [
+
+[11,12],
+
+[11,13],
+[13,15],
+
+[12,14],
+[14,16],
+
+[11,23],
+[12,24],
+
+[23,24],
+
+[23,25],
+[25,27],
+
+[24,26],
+[26,28],
+
+[27,29],
+[29,31],
+
+[28,30],
+[30,32]
+
+];
+
+
+ctx.lineWidth =
+5;
+
+ctx.strokeStyle =
+"#55eaff";
+
+ctx.fillStyle =
+"#ff4160";
+
+
+/*
+DRAW SKELETON
+*/
+
+connections.forEach(
+pair => {
+
+const a =
+lm[pair[0]];
+
+const b =
+lm[pair[1]];
+
+
+if(!a || !b)
+return;
+
+
+ctx.beginPath();
+
+ctx.moveTo(
+a.x * canvas.width,
+a.y * canvas.height
 );
 
+ctx.lineTo(
+b.x * canvas.width,
+b.y * canvas.height
+);
 
-draw.drawConnectors(
-landmarks,
-PoseLandmarker.POSE_CONNECTIONS
+ctx.stroke();
+
+}
 );
 
 
 /*
- قراءة الحركة
+DRAW JOINTS
+*/
+
+lm.forEach(
+point => {
+
+ctx.beginPath();
+
+ctx.arc(
+point.x * canvas.width,
+point.y * canvas.height,
+5,
+0,
+Math.PI * 2
+);
+
+ctx.fill();
+
+}
+);
+
+
+/*
+CRUNCH
 */
 
 const state =
-crunch(landmarks);
+detectCrunch(lm);
 
 
 if(
@@ -1014,17 +1316,19 @@ state === "up" &&
 phase === "down"
 ){
 
-phase = "up";
+phase =
+"up";
 
 }
 
 
-else if(
+if(
 state === "down" &&
 phase === "up"
 ){
 
-phase = "down";
+phase =
+"down";
 
 hit();
 
@@ -1033,86 +1337,21 @@ hit();
 
 $("state").textContent =
 phase === "up"
-? "⬆️ ارفع"
+? "⬆️ اصعد"
 : "⬇️ انزل";
 
 }
 
 
-else{
-
-$("state").textContent =
-"👤 لم أجد الجسم";
-
-}
-
-
-lastVideoTime =
-video.currentTime;
-
-}
-
-
-animation =
-requestAnimationFrame(loop);
-
-}
-
-
-/*
-====================================
- إعداد البوس
-====================================
-*/
-
-function boss(){
-
-maxHP =
-20 + ((level-1)*10);
-
-hp = maxHP;
-
-
-$("level").textContent =
-level;
-
-
-$("hpText").textContent =
-`${hp} / ${maxHP}`;
-
-
-$("hp").style.width =
-"100%";
-
-
-const data =
-bosses[
-Math.min(
-level-1,
-bosses.length-1
-)
-];
-
-
-$("bossName").textContent =
-data[0];
-
-$("bossEmoji").textContent =
-data[1];
-
-}
-
-
-/*
-====================================
- بدء اللعبة
-====================================
-*/
+/* =========================================
+START GAME
+========================================= */
 
 async function startGame(){
 
 $("error").style.display =
 "none";
+
 
 $("loading").style.display =
 "block";
@@ -1124,8 +1363,9 @@ true;
 
 try{
 
+
 /*
- التأكد من HTTPS
+HTTPS
 */
 
 if(
@@ -1135,54 +1375,202 @@ location.hostname !== "127.0.0.1"
 ){
 
 throw new Error(
-"الموقع يجب أن يعمل عبر HTTPS. تأكد أن رابط Vercel يبدأ بـ https://"
+"يجب تشغيل الموقع عبر HTTPS."
 );
 
 }
 
 
 /*
- الكاميرا
+CAMERA SUPPORT
 */
 
-await camera();
+if(
+!navigator.mediaDevices ||
+!navigator.mediaDevices.getUserMedia
+){
+
+throw new Error(
+"هذا المتصفح لا يدعم الكاميرا."
+);
+
+}
 
 
 /*
- MediaPipe
+CAMERA
 */
 
-await loadPose();
+$("status").textContent =
+"📷 جاري طلب إذن الكاميرا...";
+
+
+stream =
+await navigator.mediaDevices.getUserMedia({
+
+audio:false,
+
+video:{
+facingMode:"user",
+
+width:{
+ideal:1280
+},
+
+height:{
+ideal:720
+}
+
+}
+
+});
+
+
+$("video").srcObject =
+stream;
+
+
+await $("video").play();
+
+
+$("cameraMessage").style.display =
+"none";
 
 
 /*
- بداية اللعبة
+CHECK MEDIAPIPE
 */
 
-level = 1;
-reps = 0;
+$("status").textContent =
+"🦴 جاري تحميل نظام تتبع الجسم...";
+
+
+if(
+typeof Pose ===
+"undefined"
+){
+
+throw new Error(
+"MediaPipe لم يتم تحميله. تأكد من اتصال الإنترنت ثم أعد تحميل الصفحة."
+);
+
+}
+
+
+/*
+CREATE POSE
+*/
+
+pose =
+new Pose({
+
+locateFile:
+file =>
+
+"https://cdn.jsdelivr.net/npm/@mediapipe/pose/"
++
+file
+
+});
+
+
+pose.setOptions({
+
+modelComplexity:1,
+
+smoothLandmarks:true,
+
+enableSegmentation:false,
+
+smoothSegmentation:true,
+
+minDetectionConfidence:.5,
+
+minTrackingConfidence:.5
+
+});
+
+
+pose.onResults(
+onResults
+);
+
+
+/*
+CAMERA CLASS
+*/
+
+camera =
+new Camera(
+$("video"),
+{
+
+onFrame:
+async () => {
+
+if(
+running &&
+!paused
+){
+
+await pose.send({
+image:$("video")
+});
+
+}
+
+},
+
+width:1280,
+
+height:720
+
+});
+
+
+/*
+RESET
+*/
+
+level =
+1;
+
+reps =
+0;
 
 $("reps").textContent =
 "0";
 
 
-boss();
+phase =
+"down";
 
 
-screen(gameScreen);
+setBoss();
 
 
-playing = true;
-paused = false;
+running =
+true;
 
-phase = "down";
+paused =
+false;
 
 
 $("instruction").textContent =
-"انزل أولاً، ثم ارفع كتفيك. كل حركة كاملة تنقص HP.";
+
+"ضع جسمك كاملاً أمام الكاميرا. انزل ثم اصعد بالـ Crunch.";
 
 
-loop();
+show(
+gameScreen
+);
+
+
+$("status").textContent =
+"✅ جاهز!";
+
+
+camera.start();
 
 }
 
@@ -1190,10 +1578,32 @@ catch(error){
 
 console.error(error);
 
+
 showError(
+
 error.message ||
-"حدث خطأ أثناء تشغيل اللعبة."
+"حدث خطأ أثناء تشغيل الكاميرا."
+
 );
+
+
+$("status").textContent =
+"⚠️ لم يبدأ التحدي.";
+
+
+if(stream){
+
+stream
+.getTracks()
+.forEach(
+track =>
+track.stop()
+);
+
+stream =
+null;
+
+}
 
 }
 
@@ -1210,61 +1620,86 @@ $("loading").style.display =
 }
 
 
-/*
-====================================
- هزيمة البوس
-====================================
-*/
+/* =========================================
+DEFEAT
+========================================= */
 
-function defeat(){
+function defeatBoss(){
 
-playing = false;
+running =
+false;
 
 
-if(animation)
-cancelAnimationFrame(animation);
+if(camera){
+
+try{
+
+camera.stop();
+
+}catch(e){}
+
+}
 
 
 $("next").textContent =
-level+1;
+level + 1;
 
 
-screen(restScreen);
+show(
+restScreen
+);
 
 
-let seconds = 120;
+let seconds =
+120;
 
 
 $("timer").textContent =
 "02:00";
 
 
-clearInterval(restInterval);
+clearInterval(
+restInterval
+);
 
 
 restInterval =
-setInterval(()=>{
+setInterval(
+
+() => {
 
 seconds--;
 
 
-const min =
+const minutes =
 String(
-Math.floor(seconds/60)
-).padStart(2,"0");
+Math.floor(
+seconds / 60
+)
+)
+.padStart(
+2,
+"0"
+);
 
 
 const sec =
 String(
-seconds%60
-).padStart(2,"0");
+seconds % 60
+)
+.padStart(
+2,
+"0"
+);
 
 
 $("timer").textContent =
-`${min}:${sec}`;
+minutes + ":" + sec;
 
 
-if(seconds <= 0){
+if(
+seconds <= 0
+){
 
 clearInterval(
 restInterval
@@ -1274,16 +1709,18 @@ nextBoss();
 
 }
 
-},1000);
+},
+
+1000
+
+);
 
 }
 
 
-/*
-====================================
- البوس القادم
-====================================
-*/
+/* =========================================
+NEXT BOSS
+========================================= */
 
 function nextBoss(){
 
@@ -1292,7 +1729,9 @@ restInterval
 );
 
 
-if(level >= 10){
+if(
+level >= 10
+){
 
 finish();
 
@@ -1304,121 +1743,164 @@ return;
 level++;
 
 
-boss();
+setBoss();
 
 
-screen(gameScreen);
+phase =
+"down";
+
+paused =
+false;
+
+running =
+true;
 
 
-playing = true;
-
-paused = false;
-
-phase = "down";
+show(
+gameScreen
+);
 
 
-loop();
+if(camera){
+
+camera.start();
+
+}
 
 }
 
 
-/*
-====================================
- النهاية
-====================================
-*/
+/* =========================================
+FINISH
+========================================= */
 
 function finish(){
 
-playing = false;
+running =
+false;
 
 
-if(cameraStream){
+if(camera){
 
-cameraStream
+try{
+
+camera.stop();
+
+}catch(e){}
+
+}
+
+
+if(stream){
+
+stream
 .getTracks()
 .forEach(
 track =>
 track.stop()
 );
+
+stream =
+null;
 
 }
 
 
 $("result").textContent =
-`أكملت 10 مراحل وحققت ${reps} عدة! 💪`;
+
+"أكملت 10 مراحل وحققت "
++
+reps
++
+" عدة! 💪";
 
 
-screen(winScreen);
+show(
+winScreen
+);
 
 }
 
 
-/*
-====================================
- Pause
-====================================
-*/
+/* =========================================
+PAUSE
+========================================= */
 
 $("pause").onclick =
-()=>{
+() => {
 
-paused = !paused;
+paused =
+!paused;
 
 
 $("pause").textContent =
+
 paused
-? "▶️ متابعة"
-: "⏸ إيقاف";
+?
+"▶️ متابعة"
+:
+"⏸ إيقاف";
 
 
-if(!paused){
+if(
+!paused &&
+camera
+){
 
-loop();
+camera.start();
 
 }
 
 };
 
 
-/*
-====================================
- Stop
-====================================
-*/
+/* =========================================
+STOP
+========================================= */
 
 $("stop").onclick =
-()=>{
+() => {
 
-playing = false;
-
-
-if(animation)
-cancelAnimationFrame(animation);
+running =
+false;
 
 
-if(cameraStream){
+if(camera){
 
-cameraStream
+try{
+
+camera.stop();
+
+}catch(e){}
+
+}
+
+
+if(stream){
+
+stream
 .getTracks()
 .forEach(
 track =>
 track.stop()
 );
 
+stream =
+null;
+
 }
 
 
-screen(startScreen);
+show(
+startScreen
+);
 
 };
 
 
-/*
-====================================
- الأزرار
-====================================
-*/
+/* =========================================
+BUTTONS
+========================================= */
 
 $("start").onclick =
 startGame;
@@ -1433,26 +1915,26 @@ nextBoss;
 
 
 $("again").onclick =
-()=>{
+() => {
 
-screen(startScreen);
+show(
+startScreen
+);
 
 };
 
 
-/*
-====================================
- تنظيف عند إغلاق الموقع
-====================================
-*/
+/* =========================================
+CLEANUP
+========================================= */
 
 window.addEventListener(
 "beforeunload",
-()=>{
+() => {
 
-if(cameraStream){
+if(stream){
 
-cameraStream
+stream
 .getTracks()
 .forEach(
 track =>
